@@ -2,4 +2,9 @@ Debian11 post-install.sh
 Debian12 post-install.sh
 Debian13 post-install.sh
 
+post-install
+- repoları düzenler (main contrib non-free non-free-firmware) backports repoyu ekler
+- temel araçları kurar (vim, tmux, htop, bmon ..)
+
 ---
+
