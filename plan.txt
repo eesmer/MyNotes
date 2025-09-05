@@ -5,7 +5,9 @@ Debian13 post-install.sh
 post-install
 - repoları düzenler (main contrib non-free non-free-firmware) backports repoyu ekler
 - temel araçları kurar (vim, tmux, htop, bmon vs)
-- temel programları kurar (i3, browsers, notes vs)
+- temel programları kurar (i3, browsers, notes, virtualbox vs)
+- SSH
+- LXC
 
 ---
 
