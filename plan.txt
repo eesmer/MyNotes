@@ -13,6 +13,10 @@ post-install
 
 - BackupUnited (rdiff-backup)
 - LastControl
+- DebianHost
+
+---
+
 - apt-cacher
 - powerdns
 - dnsmasq
