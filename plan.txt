@@ -19,4 +19,8 @@ post-install
 - VPNGuard
 - VNC Server
 
+---
 
+- DebianSBS - Debian13 Güncellemesi
+- sambad-tui Debian13 Güncellemesi
+- DebianDC trixie Güncellemesi
