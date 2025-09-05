@@ -11,3 +11,12 @@ post-install
 
 ---
 
+- BackupUnited (rdiff-backup)
+- LastControl
+- apt-cacher
+- powerdns
+- dnsmasq
+- VPNGuard
+- VNC Server
+
+
