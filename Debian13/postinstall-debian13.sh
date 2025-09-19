@@ -34,3 +34,9 @@ deb http://ftp2.de.debian.org/debian trixie-backports main contrib non-free-firm
 EOF
 chmod 644 /etc/apt/sources.list
 
+cat >/etc/apt/preferences.d/99-backports <<'EOF'
+Package: *
+Pin: release n=trixie-backports
+Pin-Priority: 100
+EOF
+
