@@ -26,3 +26,11 @@ sed -i 's/^# *\(tr_TR.UTF-8\)/\1/' /etc/locale.gen
 locale-gen
 update-locale LANG=en_US.UTF-8 LC_TIME=tr_TR.UTF-8
 
+cat > /etc/apt/sources.list <<'EOF'
+deb http://ftp2.de.debian.org/debian trixie main contrib non-free-firmware
+deb http://ftp2.de.debian.org/debian trixie-updates main contrib non-free-firmware
+deb http://security.debian.org/debian-security trixie-security main contrib non-free-firmware
+deb http://ftp2.de.debian.org/debian trixie-backports main contrib non-free-firmware
+EOF
+chmod 644 /etc/apt/sources.list
+
