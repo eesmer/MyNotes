@@ -3,6 +3,8 @@ set -euo pipefail
 set -o errtrace
 trap 'ec=$?; echo "[!] Hata ($ec): ${BASH_SOURCE[0]}:${BASH_LINENO[0]}: $(printf "%q" "$BASH_COMMAND")" >&2' ERR
 
+export DEBIAN_FRONTEND=noninteractive
+
 HOSTNAME="erkdebian"
 TIMEZONE="Europe/Istanbul"
 MYUSER="erkan"
