@@ -40,3 +40,11 @@ Pin: release n=trixie-backports
 Pin-Priority: 100
 EOF
 
+mkdir -p /etc/apt/apt.conf.d
+cat > /etc/apt/apt.conf.d/99options <<'EOF'
+APT::Install-Recommends "true";
+APT::Install-Suggests "false";
+Acquire::Retries "3";
+Dpkg::Options { "--force-confdef"; "--force-confold"; };
+EOF
+
