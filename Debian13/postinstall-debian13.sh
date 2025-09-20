@@ -8,13 +8,14 @@ export DEBIAN_FRONTEND=noninteractive
 HOSTNAME="erkdebian"
 TIMEZONE="Europe/Istanbul"
 MYUSER="erkan"
+REPO="deb http://deb.debian.org" #deb http://ftp2.deb.debian.org
 
 hostnamectl set-hostname "$HOSTNAME"
 timedatectl set-timezone "$TIMEZONE"
 timedatectl set-ntp true
 
 mkdir -p /etc/systemd/timesyncd.conf.d
-tee /etc/systemd/timesyncd.conf.d/custom.conf > /dev/null <<'EOF'
+tee /etc/systemd/timesyncd.conf.d/timesync_custom.conf > /dev/null <<'EOF'
 [Time]
 NTP=0.debian.pool.ntp.org 1.debian.pool.ntp.org
 FallbackNTP=time.google.com pool.ntp.org
@@ -29,10 +30,10 @@ locale-gen
 update-locale LANG=en_US.UTF-8 LC_TIME=tr_TR.UTF-8
 
 cat > /etc/apt/sources.list <<'EOF'
-deb http://ftp2.de.debian.org/debian trixie main contrib non-free-firmware
-deb http://ftp2.de.debian.org/debian trixie-updates main contrib non-free-firmware
-deb http://security.debian.org/debian-security trixie-security main contrib non-free-firmware
-deb http://ftp2.de.debian.org/debian trixie-backports main contrib non-free-firmware
+$REPO/debian trixie main contrib non-free-firmware
+$REPO/debian trixie-updates main contrib non-free-firmware
+$REPO/debian-security trixie-security main contrib non-free-firmware
+$REPO/debian trixie-backports main contrib non-free-firmware
 EOF
 chmod 644 /etc/apt/sources.list
 
