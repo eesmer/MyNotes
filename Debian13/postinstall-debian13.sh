@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 set -o errtrace
-trap 'ec=$?; echo "[!] Hata ($ec): ${BASH_SOURCE[0]}:${BASH_LINENO[0]}: $(printf "%q" "$BASH_COMMAND")" >&2' ERR
+trap 'ec=$?; echo "[!] Error ($ec): ${BASH_SOURCE[0]}:${BASH_LINENO[0]}: $(printf "%q" "$BASH_COMMAND")" >&2' ERR
 
 export DEBIAN_FRONTEND=noninteractive
 
@@ -45,7 +45,7 @@ EOF
 
 mkdir -p /etc/apt/apt.conf.d
 cat > /etc/apt/apt.conf.d/99-options <<'EOF'
-APT::Install-Recommends "true";
+APT::Install-Recommends "false";
 APT::Install-Suggests "false";
 Acquire::Retries "3";
 Dpkg::Options { "--force-confdef"; "--force-confold"; };
