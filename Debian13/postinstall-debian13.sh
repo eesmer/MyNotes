@@ -52,3 +52,7 @@ EOF
 
 apt-get update && apt-get -y full-upgrade && apt-get -y autoremove --purge && apt-get -y autoclean
 
+# PACKAGES INSTALL
+apt-get install -y isenkram-cli
+isenkram-autoinstall-firmware || true
+
