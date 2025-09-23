@@ -55,10 +55,12 @@ apt-get update && apt-get -y full-upgrade && apt-get -y autoremove --purge && ap
 # PACKAGES INSTALL
 grep -qi 'GenuineIntel' /proc/cpuinfo && apt-get install -y intel-microcode || grep -qi 'AuthenticAMD' /proc/cpuinfo && apt-get install -y amd64-microcode || true
 apt-get install -y isenkram-cli && isenkram-autoinstall-firmware || true
+apt-get install -y xserver-xorg xserver-xorg-input-libinput xauth
 apt-get -y install i3 i3status suckless-tools
-apt-get -y install xterm xinit
+apt-get -y install lxpolkit
+apt-get -y install xterm xinit xfce4-terminal
 apt-get -y install thunar thunar-volman tumbler ffmpegthumbnailer gvfs-backends gvfs-fuse udisks2
-#apt-get -y install policykit-1-gnome
+apt-get -y install vim tmux openssh-server htop
 apt-get install -y zsh fzf zsh-autosuggestions zsh-syntax-highlighting ripgrep
 # === MY .zshrc config ===
 cat >"/home/$MYUSER/.zshrc" <<'EOF'
