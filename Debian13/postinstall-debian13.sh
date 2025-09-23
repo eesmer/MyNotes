@@ -66,6 +66,9 @@ apt-get install -y zsh fzf zsh-autosuggestions zsh-syntax-highlighting ripgrep
 cat >"/home/$MYUSER/.zshrc" <<'EOF'
 # ==== MY .zshrc ====
 
+# === Directory and Files Color Setting ===
+export LS_COLORS="$LS_COLORS:*.sh=0;32:*.py=0;32:*.json=0;32:*.jpg=0;35:*.png=0;35:*.pdf=0;36:*.xls=0;36:*.xlsx=0;36:*.doc=0;36:*.docx=0;36:*.txt=0;90:*.log=0;90:*.zip=0;31:*.tar=0;31:*.gz=0;31"
+
 # === History ====
 HISTFILE=~/.zsh_history
 HISTSIZE=50000
