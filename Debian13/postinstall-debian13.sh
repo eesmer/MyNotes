@@ -69,6 +69,29 @@ cat >"/home/$MYUSER/.zshrc" <<'EOF'
 # === Directory and Files Color Setting ===
 export LS_COLORS="$LS_COLORS:*.sh=0;32:*.py=0;32:*.json=0;32:*.jpg=0;35:*.png=0;35:*.pdf=0;36:*.xls=0;36:*.xlsx=0;36:*.doc=0;36:*.docx=0;36:*.txt=0;90:*.log=0;90:*.zip=0;31:*.tar=0;31:*.gz=0;31"
 
+# === Alias ===
+alias ls='ls --color=auto'
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+# === Color ZSH Completion (Use LS_COLORS Pallet) ===
+zmodload zsh/complist
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+# === Color man (less) ===
+export LESS='-R'
+export LESS_TERMCAP_mb=$'\e[1;31m'   # blink -> bold red
+export LESS_TERMCAP_md=$'\e[1;36m'   # bold  -> cyan
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[1;44;37m' # standout (başlık satırı)
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[1;32m'   # underline -> green
+export LESS_TERMCAP_ue=$'\e[0m'
+
 # === History ====
 HISTFILE=~/.zsh_history
 HISTSIZE=50000
