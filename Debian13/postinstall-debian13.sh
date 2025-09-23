@@ -53,6 +53,7 @@ EOF
 apt-get update && apt-get -y full-upgrade && apt-get -y autoremove --purge && apt-get -y autoclean
 
 # PACKAGES INSTALL
+grep -qi 'GenuineIntel' /proc/cpuinfo && apt-get install -y intel-microcode || grep -qi 'AuthenticAMD' /proc/cpuinfo && apt-get install -y amd64-microcode || true
 apt-get install -y isenkram-cli
 isenkram-autoinstall-firmware || true
 
