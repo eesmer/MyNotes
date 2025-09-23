@@ -54,6 +54,53 @@ apt-get update && apt-get -y full-upgrade && apt-get -y autoremove --purge && ap
 
 # PACKAGES INSTALL
 grep -qi 'GenuineIntel' /proc/cpuinfo && apt-get install -y intel-microcode || grep -qi 'AuthenticAMD' /proc/cpuinfo && apt-get install -y amd64-microcode || true
-apt-get install -y isenkram-cli
-isenkram-autoinstall-firmware || true
+apt-get install -y isenkram-cli && isenkram-autoinstall-firmware || true
+apt-get -y install i3 i3status suckless-tools
+apt-get -y install xterm xinit
+apt-get -y install thunar thunar-volman tumbler ffmpegthumbnailer gvfs-backends gvfs-fuse udisks2
+#apt-get -y install policykit-1-gnome
+apt-get install -y zsh fzf zsh-autosuggestions zsh-syntax-highlighting ripgrep
+# === MY .zshrc config ===
+cat >"/home/$MYUSER/.zshrc" <<'EOF'
+# ==== MY .zshrc ====
+
+# === History ====
+HISTFILE=~/.zsh_history
+HISTSIZE=50000
+SAVEHIST=100000
+setopt HIST_IGNORE_ALL_DUPS HIST_REDUCE_BLANKS SHARE_HISTORY
+
+# === Keymap ===
+bindkey -e
+
+# === Completion ===
+autoload -Uz compinit && compinit
+zmodload zsh/complist
+zstyle ':completion:*' menu select
+setopt AUTO_MENU MENU_COMPLETE
+
+# === fzf settings ===
+export FZF_TMUX=1
+export FZF_TMUX_OPTS='-d 15'
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*" 2>/dev/null'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+[[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]] && source /usr/share/doc/fzf/examples/key-bindings.zsh
+[[ -f /usr/share/doc/fzf/examples/completion.zsh    ]] && source /usr/share/doc/fzf/examples/completion.zsh
+export FZF_CTRL_R_OPTS='--sort --exact'
+
+# === Autosuggest + syntax highlighting ===
+source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# === Prompt Settings ===
+zstyle ':completion:*:*:vim:*' file-sort modification
+autoload -Uz colors && colors
+PROMPT='%F{cyan}%n@%m%f:%F{yellow}%~%f %# '
+
+EOF
+
+chown "$MYUSER:$MYUSER" "/home/$MYUSER/.zshrc"
+chmod 0644 "/home/$MYUSER/.zshrc"
+usermod -s /bin/zsh erkan
 
