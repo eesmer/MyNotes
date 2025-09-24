@@ -187,7 +187,7 @@ while true; do
   # set -e
   # set +e
   CHOICE=$(
-    whiptail --title "$title" --menu "Bir eylem seç:" 20 60 10 \
+    whiptail --title "$title" --menu "Make a Choice:" 20 60 10 \
       1 "Start i3" \
       2 "System Upgrade" \
       3 "Network Info" \
@@ -204,7 +204,7 @@ while true; do
   case "$CHOICE" in
     1) clear; startx ;;
     2) clear; sudo apt-get update && sudo apt-get -y full-upgrade || true ;;
-    3) clear; ip -br a; echo; ip route; echo; resolvectl status 2>&1 | sed -n '1,80p'; read -p "Devam için Enter..." ;;
+    3) clear; ip -br a; echo; ip route; echo; resolvectl status 2>&1 | sed -n '1,80p'; read -p "Enter to Continue" ;;
     4) sudo reboot ;;
     5) sudo poweroff ;;
     *) : ;;  # return menu
