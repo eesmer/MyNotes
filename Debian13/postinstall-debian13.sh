@@ -17,10 +17,15 @@ HOSTNAME="erkdebian"
 TIMEZONE="Europe/Istanbul"
 MYUSER="erkan"
 
+# === HOSTNAME and TIMEDATE Settings ===
 hostnamectl set-hostname "$HOSTNAME"
 timedatectl set-timezone "$TIMEZONE"
 timedatectl set-ntp true
 
+# === MYUSER Settings ===
+usermod -aG sudo "$MYUSER"
+
+# === APT/REPOS ===
 cat > /etc/apt/sources.list <<'EOF'
 deb http://deb.debian.org/debian trixie main contrib non-free non-free-firmware
 deb http://deb.debian.org/debian trixie-updates main contrib non-free non-free-firmware
@@ -29,6 +34,7 @@ deb http://deb.debian.org/debian trixie-backports main contrib non-free non-free
 EOF
 chmod 644 /etc/apt/sources.list
 
+# === TIME/SYNC ===
 mkdir -p /etc/systemd/timesyncd.conf.d
 tee /etc/systemd/timesyncd.conf.d/timesync_custom.conf > /dev/null <<'EOF'
 [Time]
@@ -60,7 +66,7 @@ EOF
 
 apt-get update && apt-get -y full-upgrade && apt-get -y autoremove --purge && apt-get -y autoclean
 
-# PACKAGES INSTALL
+# PACKAGES
 grep -qi 'GenuineIntel' /proc/cpuinfo && apt-get -y install intel-microcode || grep -qi 'AuthenticAMD' /proc/cpuinfo && apt-get -y install amd64-microcode || true
 apt-get -y install isenkram-cli && isenkram-autoinstall-firmware || true
 apt-get -y install xserver-xorg xserver-xorg-input-libinput xauth
@@ -147,60 +153,67 @@ EOF
 
 chown "$MYUSER:$MYUSER" "/home/$MYUSER/.zshrc"
 chmod 0644 "/home/$MYUSER/.zshrc"
-usermod -s /bin/zsh $MYUSER
+###usermod -s /bin/zsh $MYUSER
+
+# === erkwelcome.sh wrapper ===
+cat >/usr/local/bin/erkwelcome-wrapper <<'EOF'
+trap '' INT TSTP QUIT HUP TERM
+
+if [ -z "$DISPLAY" ] && [ -z "${SSH_CONNECTION:-}" ] && [ "${XDG_VTNR:-}" = "1" ]; then
+  exec /usr/local/bin/erkwelcome.sh
+fi
+
+exec /bin/zsh -l
+EOF
+
+chmod 0755 /usr/local/bin/erkwelcome-wrapper
+
+grep -qxF /usr/local/bin/erkwelcome-wrapper /etc/shells || echo /usr/local/bin/zsh-login-wrapper >> /etc/shells
+usermod -s /usr/local/bin/erkwelcome-wrapper erkan
 
 # === erkwelcome ===
 
 cat > /usr/local/bin/erkwelcome.sh <<'EOF'
 #!/usr/bin/env bash
-set -Eeuo pipefail
+set -u -o pipefail
 
-title="ErkWelcome Menu"
+# Ctrl+C/Z/\ off
+trap 'printf "\n[!] Ctrl+C Not Usage.\n" >/dev/tty' INT
+trap 'printf "\n[!] Ctrl+Z Not Usage.\n" >/dev/tty' TSTP
+trap 'printf "\n[!] Ctrl+\\ Not Usage.\n" >/dev/tty' QUIT
+
+title="Erkan TUI"
 while true; do
+  # set -e
+  # set +e
   CHOICE=$(
-    whiptail --title "$title" --menu "Make a Choice:" 20 60 10 \
-      1 "Satrt i3" \
+    whiptail --title "$title" --menu "Bir eylem seç:" 20 60 10 \
+      1 "Start i3" \
       2 "System Upgrade" \
-      3 "NW Info" \
+      3 "Network Info" \
       4 "Reboot" \
       5 "Poweroff" \
-      0 "Return Shell" \
-      3>&1 1>&2 2>&3 || echo "0"
+      3>&1 1>&2 2>&3
   )
+  rc=$?
+  # set -e
 
-  case "${CHOICE}" in
-    1)
-      if command -v startx >/dev/null 2>&1; then
-        clear
-        startx
-      else
-        whiptail --title "$title" --msgbox "startx command not found" 8 40
-      fi
-      ;;
-    2)
-      clear
-      sudo apt-get update && sudo apt-get -y full-upgrade || true
-      whiptail --title "$title" --msgbox "Update finished" 8 60
-      ;;
-    3)
-      TMP=$(mktemp)
-      {
-        echo "==== ip -br a ===="; ip -br a || true
-        echo; echo "==== ip route ===="; ip route || true
-        echo; echo "==== resolvectl ===="; resolvectl status 2>&1 || true
-      } > "$TMP"
-      whiptail --title "$title" --textbox "$TMP" 25 90
-      rm -f "$TMP"
-      ;;
+  # ESC/Cancel/Ctrl+C -> rc!=0, return to menu
+  [ $rc -ne 0 ] && CHOICE=""
+
+  case "$CHOICE" in
+    1) clear; startx ;;
+    2) clear; sudo apt-get update && sudo apt-get -y full-upgrade || true ;;
+    3) clear; ip -br a; echo; ip route; echo; resolvectl status 2>&1 | sed -n '1,80p'; read -p "Devam için Enter..." ;;
     4) sudo reboot ;;
     5) sudo poweroff ;;
-    0|*) clear; break ;;
+    *) : ;;  # return menu
   esac
 done
 EOF
 
 chown erkan:erkan /usr/local/bin/erkwelcome.sh
-chmod 644 /usr/local/bin/erkwelcome.sh
+chmod 755 /usr/local/bin/erkwelcome.sh
 chmod +x /usr/local/bin/erkwelcome.sh
 
 cat > /home/$MYUSER/.zlogin <<'EOF'
