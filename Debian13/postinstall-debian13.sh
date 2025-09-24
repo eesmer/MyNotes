@@ -78,6 +78,7 @@ apt-get -y install lxpolkit
 apt-get -y install x11-xserver-utils whiptail
 apt-get -y install thunar thunar-volman tumbler ffmpegthumbnailer gvfs-backends gvfs-fuse udisks2
 apt-get -y install zsh fzf zsh-autosuggestions zsh-syntax-highlighting ripgrep
+
 # === MY .zshrc CONFIG ===
 cat >"/home/$MYUSER/.zshrc" <<'EOF'
 # ==== MY .zshrc ====
@@ -157,12 +158,15 @@ chmod 0644 "/home/$MYUSER/.zshrc"
 
 # === erkwelcome.sh wrapper ===
 cat >/usr/local/bin/erkwelcome-wrapper <<'EOF'
-trap '' INT TSTP QUIT HUP TERM
+# /usr/local/bin/erkwelcome-wrapper
+#!/bin/sh
+# Sadece Ctrl+C/Z/\ kilitle; TERM/HUP default kalsın ki kapanışta süreç hemen bitsin
+trap '' INT TSTP QUIT # HUB TERM for poweroff
 
 if [ -z "$DISPLAY" ] && [ -z "${SSH_CONNECTION:-}" ] && [ "${XDG_VTNR:-}" = "1" ]; then
+  [ -e /run/systemd/shutdown/scheduled ] && exit 0
   exec /usr/local/bin/erkwelcome.sh
 fi
-
 exec /bin/zsh -l
 EOF
 
@@ -172,7 +176,6 @@ grep -qxF /usr/local/bin/erkwelcome-wrapper /etc/shells || echo /usr/local/bin/z
 usermod -s /usr/local/bin/erkwelcome-wrapper erkan
 
 # === erkwelcome ===
-
 cat > /usr/local/bin/erkwelcome.sh <<'EOF'
 #!/usr/bin/env bash
 set -u -o pipefail
