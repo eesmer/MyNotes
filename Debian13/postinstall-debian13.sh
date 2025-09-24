@@ -61,6 +61,7 @@ apt-get -y install lxpolkit
 apt-get -y install xterm xinit xfce4-terminal
 apt-get -y install thunar thunar-volman tumbler ffmpegthumbnailer gvfs-backends gvfs-fuse udisks2
 apt-get -y install vim tmux openssh-server htop
+apt-get -y install whiptail
 apt-get install -y zsh fzf zsh-autosuggestions zsh-syntax-highlighting ripgrep
 # === MY .zshrc config ===
 cat >"/home/$MYUSER/.zshrc" <<'EOF'
@@ -130,5 +131,5 @@ EOF
 
 chown "$MYUSER:$MYUSER" "/home/$MYUSER/.zshrc"
 chmod 0644 "/home/$MYUSER/.zshrc"
-usermod -s /bin/zsh erkan
+usermod -s /bin/zsh $MYUSER
 
