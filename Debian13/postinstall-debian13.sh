@@ -1,4 +1,12 @@
 #!/bin/bash
+
+#-------------------------------------------------------------------------
+# Debian13-postinstall.sh
+# This script customizes my Debian installation for personal use.
+# It includes the tools and configurations I use.
+# Tested with Debian 13
+#-------------------------------------------------------------------------
+
 set -euo pipefail
 set -o errtrace
 trap 'ec=$?; echo "[!] Error ($ec): ${BASH_SOURCE[0]}:${BASH_LINENO[0]}: $(printf "%q" "$BASH_COMMAND")" >&2' ERR
