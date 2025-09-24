@@ -70,6 +70,7 @@ apt-get update && apt-get -y full-upgrade && apt-get -y autoremove --purge && ap
 grep -qi 'GenuineIntel' /proc/cpuinfo && apt-get -y install intel-microcode || grep -qi 'AuthenticAMD' /proc/cpuinfo && apt-get -y install amd64-microcode || true
 apt-get -y install isenkram-cli && isenkram-autoinstall-firmware || true
 apt-get -y install xserver-xorg xserver-xorg-input-libinput xauth
+apt-get -y install systemd-resolved
 apt-get -y install i3 i3status xtrlock suckless-tools
 apt-get -y install xterm xinit xfce4-terminal
 apt-get -y install vim tmux openssh-server htop
