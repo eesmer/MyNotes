@@ -71,6 +71,7 @@ cat >"/home/$MYUSER/.zshrc" <<'EOF'
 export LS_COLORS="$LS_COLORS:*.sh=0;32:*.py=0;32:*.json=0;32:*.jpg=0;35:*.png=0;35:*.pdf=0;36:*.xls=0;36:*.xlsx=0;36:*.doc=0;36:*.docx=0;36:*.txt=0;90:*.log=0;90:*.zip=0;31:*.tar=0;31:*.gz=0;31"
 
 # === Alias ===
+alias off='sudo poweroff'
 alias ls='ls --color=auto'
 alias ll='ls -alF'
 alias la='ls -A'
@@ -78,6 +79,12 @@ alias l='ls -CF'
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
+alias off='sudo poweroff'
 
 # === Color ZSH Completion (Use LS_COLORS Pallet) ===
 zmodload zsh/complist
@@ -132,4 +139,67 @@ EOF
 chown "$MYUSER:$MYUSER" "/home/$MYUSER/.zshrc"
 chmod 0644 "/home/$MYUSER/.zshrc"
 usermod -s /bin/zsh $MYUSER
+
+# === erkwelcome ===
+
+cat > /usr/local/bin/erkwelcome.sh <<'EOF'
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+title="ErkWelcome Menu"
+while true; do
+  CHOICE=$(
+    whiptail --title "$title" --menu "Bir eylem seç:" 20 60 10 \
+      1 "i3 başlat (startx)" \
+      2 "Sistemi güncelle (apt full-upgrade)" \
+      3 "Ağ bilgisi (IP/Rota/DNS)" \
+      4 "Yeniden başlat" \
+      5 "Kapat" \
+      0 "Shell'e dön" \
+      3>&1 1>&2 2>&3 || echo "0"
+  )
+
+  case "${CHOICE}" in
+    1)
+      if command -v startx >/dev/null 2>&1; then
+        clear
+        startx
+      else
+        whiptail --title "$title" --msgbox "startx bulunamadı." 8 40
+      fi
+      ;;
+    2)
+      clear
+      sudo apt-get update && sudo apt-get -y full-upgrade || true
+      whiptail --title "$title" --msgbox "Güncelleme tamamlandı (çıktı konsolda)." 8 60
+      ;;
+    3)
+      TMP=$(mktemp)
+      {
+        echo "==== ip -br a ===="; ip -br a || true
+        echo; echo "==== ip route ===="; ip route || true
+        echo; echo "==== resolvectl ===="; resolvectl status 2>&1 || true
+      } > "$TMP"
+      whiptail --title "$title" --textbox "$TMP" 25 90
+      rm -f "$TMP"
+      ;;
+    4) sudo reboot ;;
+    5) sudo poweroff ;;
+    0|*) clear; break ;;
+  esac
+done
+EOF
+
+chown erkan:erkan /usr/local/bin/erkwelcome.sh
+chmod 644 /usr/local/bin/erkwelcome.sh
+chmod +x /usr/local/bin/erkwelcome.sh
+
+cat > /home/$MYUSER/.zlogin <<'EOF'
+if [[ -o interactive && -o login && -z "$DISPLAY" && "${XDG_VTNR:-}" = "1" && -z "${SSH_CONNECTION:-}" ]]; then
+  /usr/local/bin/erkwelcome.sh
+fi
+EOF
+
+chown $MYUSER:$MYUSER /home/$MYUSER/.zlogin
+chmod 0644 /home/$MYUSER/.zlogin
 
