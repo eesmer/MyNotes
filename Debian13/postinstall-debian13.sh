@@ -62,6 +62,7 @@ apt-get -y install xterm xinit xfce4-terminal
 apt-get -y install thunar thunar-volman tumbler ffmpegthumbnailer gvfs-backends gvfs-fuse udisks2
 apt-get -y install vim tmux openssh-server htop
 apt-get -y install whiptail
+apt-get -y install x11-xserver-utils
 apt-get -y install zsh fzf zsh-autosuggestions zsh-syntax-highlighting ripgrep
 # === MY .zshrc config ===
 cat >"/home/$MYUSER/.zshrc" <<'EOF'
@@ -149,13 +150,13 @@ set -Eeuo pipefail
 title="ErkWelcome Menu"
 while true; do
   CHOICE=$(
-    whiptail --title "$title" --menu "Bir eylem seç:" 20 60 10 \
-      1 "i3 başlat (startx)" \
-      2 "Sistemi güncelle (apt full-upgrade)" \
-      3 "Ağ bilgisi (IP/Rota/DNS)" \
-      4 "Yeniden başlat" \
-      5 "Kapat" \
-      0 "Shell'e dön" \
+    whiptail --title "$title" --menu "Make a Choice:" 20 60 10 \
+      1 "Satrt i3" \
+      2 "System Upgrade" \
+      3 "NW Info" \
+      4 "Reboot" \
+      5 "Poweroff" \
+      0 "Return Shell" \
       3>&1 1>&2 2>&3 || echo "0"
   )
 
@@ -165,13 +166,13 @@ while true; do
         clear
         startx
       else
-        whiptail --title "$title" --msgbox "startx bulunamadı." 8 40
+        whiptail --title "$title" --msgbox "startx command not found" 8 40
       fi
       ;;
     2)
       clear
       sudo apt-get update && sudo apt-get -y full-upgrade || true
-      whiptail --title "$title" --msgbox "Güncelleme tamamlandı (çıktı konsolda)." 8 60
+      whiptail --title "$title" --msgbox "Update finished" 8 60
       ;;
     3)
       TMP=$(mktemp)
