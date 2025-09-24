@@ -56,7 +56,7 @@ apt-get update && apt-get -y full-upgrade && apt-get -y autoremove --purge && ap
 grep -qi 'GenuineIntel' /proc/cpuinfo && apt-get install -y intel-microcode || grep -qi 'AuthenticAMD' /proc/cpuinfo && apt-get install -y amd64-microcode || true
 apt-get install -y isenkram-cli && isenkram-autoinstall-firmware || true
 apt-get install -y xserver-xorg xserver-xorg-input-libinput xauth
-apt-get -y install i3 i3status suckless-tools
+apt-get -y install i3 i3status xtrlock suckless-tools
 apt-get -y install lxpolkit
 apt-get -y install xterm xinit xfce4-terminal
 apt-get -y install thunar thunar-volman tumbler ffmpegthumbnailer gvfs-backends gvfs-fuse udisks2
