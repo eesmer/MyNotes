@@ -263,6 +263,18 @@ show_menu() {
   echo " |-----------------------------------------------------------------------|"
 }
 
+read_input() {
+  local c
+  read -rp "You can choose from the menu numbers: " c
+  case "$c" in
+    1) start_i3 ;;
+    2) exec sudo systemctl reboot ;;
+    3) exec sudo systemctl poweroff ;;
+    11) check_update ;;
+    *)  echo "Please select from the menu numbers"; pause ;;
+  esac
+}
+
 EOF
 
 chown erkan:erkan /usr/local/bin/erkwelcome.sh
