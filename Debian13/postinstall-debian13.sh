@@ -203,6 +203,15 @@ short_ip() {
   ip -4 -o addr show scope global 2>/dev/null | awk '{print $4}' | head -n1
 }
 
+default_gw() {
+  ip route 2>/dev/null | awk '/^default/ {print $3; exit}'
+}
+
+pause() {
+  local msg="${*:-Press Enter to continue}"
+  read -rp "$msg" _
+}
+
 EOF
 
 chown erkan:erkan /usr/local/bin/erkwelcome.sh
