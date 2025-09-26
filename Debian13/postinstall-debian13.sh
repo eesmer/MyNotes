@@ -212,6 +212,32 @@ pause() {
   read -rp "$msg" _
 }
 
+start_i3() {
+  echo "Starting i3..."
+  startx
+}
+
+check_update() {
+  clear
+  echo "=== Check Update (simulation) ==="
+  sudo apt-get update
+  local out sec tot
+  out=$(apt-get -s upgrade 2>/dev/null | awk '/^Inst /{print}')
+  sec=$(printf "%s\n" "$out" | awk '/\(.*-security\)/{c++} END{print c+0}')
+  tot=$(printf "%s\n" "$out" | awk 'END{print NR+0}')
+  echo "Total upgradable : ${tot:-0}"
+  echo "Security updates : ${sec:-0}"
+  echo
+  if [ -n "$out" ]; then
+    echo "Packages:"
+    echo "$out" | sed 's/^/  - /'
+  else
+    echo "System is up to date."
+  fi
+  echo
+  pause
+}
+
 EOF
 
 chown erkan:erkan /usr/local/bin/erkwelcome.sh
