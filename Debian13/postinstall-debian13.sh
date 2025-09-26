@@ -186,6 +186,23 @@ trap 'printf "\n[!] Ctrl+C disabled\n" >/dev/tty' INT
 trap 'printf "\n[!] Ctrl+Z disabled\n" >/dev/tty' TSTP
 trap 'printf "\n[!] Ctrl+\\ disabled\n" >/dev/tty' QUIT
 
+disk_root_percent() { df -P -h / | awk 'NR==2{print $5}'; }
+
+ram_one_liner() {
+  # used = total - available (gerçek kullanılabilirliği daha iyi gösterir)
+  local t a
+  t=$(free -m | awk '/^Mem:/ {print $2}')
+  a=$(free -m | awk '/^Mem:/ {print $7}')
+  awk -v t="$t" -v a="$a" 'BEGIN{
+    used=t-a; pct=(t>0)?(used*100/t):0;
+    printf "%.1f/%.1f GB (%.0f%%)", used/1024, t/1024, pct
+  }'
+}
+
+short_ip() {
+  ip -4 -o addr show scope global 2>/dev/null | awk '{print $4}' | head -n1
+}
+
 EOF
 
 chown erkan:erkan /usr/local/bin/erkwelcome.sh
