@@ -238,6 +238,31 @@ check_update() {
   pause
 }
 
+show_menu() {
+  #local host now rootp ram ip gw
+  HOST=$(hostname)
+  NOW=$(date '+%F %T %Z')
+  DISK=$(disk_root_percent)
+  RAM=$(ram_one_liner)
+  IP=$(short_ip); [ -z "$IP" ] && IP="-"
+  GW=$(default_gw); [ -z "$GW" ] && GW="-"
+  
+  echo ""
+  echo " |-----------------------------------------------------------------------|"
+  echo " | erkWelcome v0.6           :::.. Welcome Screen ..:::                  |"
+  echo " |-----------------------------------------------------------------------|"
+  echo " | :: Actions ::        | :: Controls/Reports ::                         |"
+  echo " |-----------------------------------------------------------------------|"
+  echo " | 1.Start i3           | 11.Check Update                                |"
+  echo " | 2.Reboot             |                                                |"
+  echo " | 3.Poweroff           |                                                |"
+  echo " -------------------------------------------------------------------------"
+  echo "  $HOST | $NOW  "
+  echo "  $DISK | $RAM  "
+  echo "  $IP   | $GW   "
+  echo " |-----------------------------------------------------------------------|"
+}
+
 EOF
 
 chown erkan:erkan /usr/local/bin/erkwelcome.sh
