@@ -275,6 +275,13 @@ read_input() {
   esac
 }
 
+# CTRL+C/Z/\ locked
+while true; do
+  clear
+  show_menu
+  read_input
+done
+
 EOF
 
 chown erkan:erkan /usr/local/bin/erkwelcome.sh
