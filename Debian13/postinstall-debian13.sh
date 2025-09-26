@@ -181,39 +181,11 @@ cat > /usr/local/bin/erkwelcome.sh <<'EOF'
 #!/usr/bin/env bash
 set -u -o pipefail
 
-# Ctrl+C/Z/\ off
-trap 'printf "\n[!] Ctrl+C Not Usage.\n" >/dev/tty' INT
-trap 'printf "\n[!] Ctrl+Z Not Usage.\n" >/dev/tty' TSTP
-trap 'printf "\n[!] Ctrl+\\ Not Usage.\n" >/dev/tty' QUIT
+# --- Sinyaller: Ctrl+C/Z/\ devre dışı; kapanış sinyallerine dokunma ---
+trap 'printf "\n[!] Ctrl+C disabled\n" >/dev/tty' INT
+trap 'printf "\n[!] Ctrl+Z disabled\n" >/dev/tty' TSTP
+trap 'printf "\n[!] Ctrl+\\ disabled\n" >/dev/tty' QUIT
 
-title="Erkan TUI"
-while true; do
-  # set -e
-  # set +e
-  CHOICE=$(
-    whiptail --title "$title" --menu "Make a Choice:" 20 60 10 \
-      1 "Start i3" \
-      2 "System Upgrade" \
-      3 "Network Info" \
-      4 "Reboot" \
-      5 "Poweroff" \
-      3>&1 1>&2 2>&3
-  )
-  rc=$?
-  # set -e
-
-  # ESC/Cancel/Ctrl+C -> rc!=0, return to menu
-  [ $rc -ne 0 ] && CHOICE=""
-
-  case "$CHOICE" in
-    1) clear; startx ;;
-    2) clear; sudo apt-get update && sudo apt-get -y full-upgrade || true ;;
-    3) clear; ip -br a; echo; ip route; echo; resolvectl status 2>&1 | sed -n '1,80p'; read -p "Enter to Continue" ;;
-    4) sudo reboot ;;
-    5) sudo poweroff ;;
-    *) : ;;  # return menu
-  esac
-done
 EOF
 
 chown erkan:erkan /usr/local/bin/erkwelcome.sh
