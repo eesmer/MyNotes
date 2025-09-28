@@ -1,5 +1,18 @@
 #!/bin/bash
 
+# ----------------------------------------------------------
+# Samba Active Directory Reporting
+# This script, it creates a report showing information
+# - about the domain
+# - applied policies
+# - schema and fsmo roles and etc.
+# ----------------------------------------------------------
+# Should be run on the DC machine.
+# USAGE:
+# wget https://raw.githubusercontent.com/eesmer/SambaAD-HelperScripts/master/scripts/samba-activedirectory-reporting-tool.sh
+# bash  samba-activedirectory-reporting-tool.sh
+# ----------------------------------------------------------
+
 # Color Codes
 MAGENTA="tput setaf 1"
 GREEN="tput setaf 2"
