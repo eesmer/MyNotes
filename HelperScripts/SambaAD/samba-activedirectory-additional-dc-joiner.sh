@@ -1,5 +1,22 @@
 #!/bin/bash
 
+#-------------------------------------------------------------------
+# Samba Active Directory ADC Joiner
+# This script, adds an additional domain controller to a Samba AD environment
+# You will need to know the password for the Administrator user account to complete the installation
+# With the ADC installed;
+# It becomes a 2nd DC machine that runs simultaneously in the domain environment and acts as a DC for all components in the
+# Active Directory environment (dns records, ad objects, database, fsmo roles, etc.).
+# ------------------------------------------------------------------
+# This script has been tested in Debian environment.
+# It is compatible with Debian
+# It should be run in a Debian 11 or Debian 12 environment.
+# ------------------------------------------------------------------
+# USAGE:
+# wget https://raw.githubusercontent.com/eesmer/SambaAD-HelperScripts/master/scripts/samba-activedirectory-additional-dc-joiner.sh
+# bash  samba-activedirectory-additional-dc-joiner.sh
+#-------------------------------------------------------------------
+
 whiptail --msgbox \
     ".:: Samba Active Directory Join as ADC to Existing Domain ::. \
     \n---------------------------------------------------------------- \
