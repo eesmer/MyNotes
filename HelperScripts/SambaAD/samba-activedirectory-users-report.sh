@@ -1,5 +1,20 @@
 #!/bin/bash
 
+# ----------------------------------------------------------------------
+# Samba Active Directory Users Report
+# This script generates a report of AD user accounts.
+# - Sorts accounts by creation date
+# - Shows Never Expiry accounts
+# - Shows privileged group memberships of user accounts
+# - Shows user accounts that are not logged in
+# - etc.
+# ----------------------------------------------------------------------
+# Should be run on the DC machine
+# USAGE:
+# wget https://raw.githubusercontent.com/eesmer/SambaAD-HelperScripts/master/scripts/samba-activedirectory-users-report.sh
+# bash  samba-activedirectory-users-report.sh
+# ----------------------------------------------------------------------
+
 MAGENTA="tput setaf 1"
 GREEN="tput setaf 2"
 YELLOW="tput setaf 3"
