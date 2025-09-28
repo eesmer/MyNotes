@@ -12,6 +12,7 @@
 # It is compatible with Debian
 # It should be run in a Debian 11 or Debian 12 environment.
 # ------------------------------------------------------------------
+# USAGE:
 # wget https://raw.githubusercontent.com/eesmer/SambaAD-HelperScripts/master/scripts/samba-activedirectory-installer.sh
 # bash samba-activedirectory-installer.sh
 #-------------------------------------------------------------------
