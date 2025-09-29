@@ -20,4 +20,5 @@ apt-get -y dist-upgrade
 apt-get -y install $(apt search ^firmware- 2> /dev/null | grep ^firmware | grep -v micropython-dl | cut -d "/" -f 1)
 apt-get install -y \
   i3 xtrlock thunar zsh fzf \
-  vim tmux openssh-server htop
+  vim tmux openssh-server htop \
+  feathernotes atril pavucontrol unzip xfce4-terminal freerdp2-x11 vlc feh
