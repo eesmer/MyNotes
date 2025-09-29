@@ -13,7 +13,7 @@
 # It should be run in a Debian 11 or Debian 12 environment.
 # ------------------------------------------------------------------
 # USAGE:
-# wget https://raw.githubusercontent.com/eesmer/SambaAD-HelperScripts/master/scripts/samba-activedirectory-installer.sh
+# wget https://raw.githubusercontent.com/eesmer/MyNotes/refs/heads/main/HelperScripts/SambaAD/samba-activedirectory-installer.sh
 # bash samba-activedirectory-installer.sh
 #-------------------------------------------------------------------
 
