@@ -25,4 +25,7 @@ apt-get install -y \
   firefox-esr chromium \
   libreoffice-writer libreoffice-calc libreoffice-impress \
   git ack wget curl rsync dnsutils whois net-tools \
-  gnupg2 openvpn
+  gnupg2 openvpn \
+  ntfs-3g \
+  python3 bpython3 \
+  software-properties-common lsb-release
