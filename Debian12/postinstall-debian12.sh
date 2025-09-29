@@ -16,3 +16,6 @@ EOF
 apt-get update -y
 apt-get -y dist-upgrade
 
+# PACKAGES
+apt-get -y install $(apt search ^firmware- 2> /dev/null | grep ^firmware | grep -v micropython-dl | cut -d "/" -f 1)
+
