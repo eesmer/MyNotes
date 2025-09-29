@@ -14,7 +14,7 @@
 # DebianDC makes these settings by default.
 # https://github.com/eesmer/DebianDC
 # USAGE:
-# wget https://raw.githubusercontent.com/eesmer/SambaAD-HelperScripts/master/scripts/samba-activedirectory-hardening.sh
+# wget https://raw.githubusercontent.com/eesmer/MyNotes/refs/heads/main/HelperScripts/SambaAD/samba-activedirectory-hardening.sh
 # bash  samba-activedirectory-hardening.sh
 #------------------------------------------------------------------------------------
 
