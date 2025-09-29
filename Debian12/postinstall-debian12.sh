@@ -42,3 +42,7 @@ echo "deb [arch=amd64 signed-by=/usr/share/keyrings/oracle-virtualbox.gpg] https
 apt-get update -y
 apt-get install -y dkms build-essential linux-headers-$(uname -r)
 apt-get install -y virtualbox-7.1
+
+apt-get -y autoremove
+apt-get clean
+
