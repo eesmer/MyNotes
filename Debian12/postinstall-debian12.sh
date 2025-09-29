@@ -39,3 +39,6 @@ curl -fsSL https://www.virtualbox.org/download/oracle_vbox_2016.asc | gpg --dear
 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/oracle-virtualbox.gpg] https://download.virtualbox.org/virtualbox/debian bookworm contrib" \
 	>/etc/apt/sources.list.d/virtualbox.list
 
+apt-get update -y
+apt-get install -y dkms build-essential linux-headers-$(uname -r)
+
