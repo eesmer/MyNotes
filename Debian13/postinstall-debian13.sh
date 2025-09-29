@@ -13,9 +13,13 @@ trap 'ec=$?; echo "[!] Error ($ec): ${BASH_SOURCE[0]}:${BASH_LINENO[0]}: $(print
 
 export DEBIAN_FRONTEND=noninteractive
 
+# --------------------------------------------
+# Install Config
+# --------------------------------------------
 HOSTNAME="erkdebian"
 TIMEZONE="Europe/Istanbul"
 MYUSER="erkan"
+# --------------------------------------------
 
 # === HOSTNAME and TIMEDATE Settings ===
 hostnamectl set-hostname "$HOSTNAME"
@@ -79,6 +83,23 @@ apt-get -y install lxpolkit
 apt-get -y install x11-xserver-utils whiptail
 apt-get -y install thunar thunar-volman tumbler ffmpegthumbnailer gvfs-backends gvfs-fuse udisks2
 apt-get -y install zsh fzf zsh-autosuggestions zsh-syntax-highlighting ripgrep
+apt-get -y install feathernotes atril pavucontrol unzip xfce4-terminal freerdp2-x11 vlc feh xdg-utils desktop-file-utils
+
+if update-alternatives --list x-terminal-emulator >/dev/null 2>&1; then
+  # Debian genelde wrapper'ı sağlar; listede ne var görmek istersen:
+  # update-alternatives --list x-terminal-emulator
+  update-alternatives --set x-terminal-emulator /usr/bin/xfce4-terminal.wrapper 2>/dev/null || \
+  update-alternatives --set x-terminal-emulator /usr/bin/xfce4-terminal 2>/dev/null || true
+fi
+
+# === MIME Defaults for $MYUSER(erkan) ===
+mkdir -p "/home/$USER/.config"
+chmod 0700 "/home/$USER/.config"
+chown $MYUSER:$MYUSER "/home/$USER/.config"
+mkdir -p "/home/$MYUSER/.local/share/applications"
+chmod 0700 "/home/$MYUSER/.config"
+chmod 0700 "/home/$MYUSER/.local" "/home/$MYUSER/.local/share" "/home/$MYUSER/.local/applications"
+chown -R "$MYUSER:$MYUSER" "/home/$MYUSER/.config" "/home/$MYUSER/.local"
 
 # === MY .zshrc CONFIG ===
 cat >"/home/$MYUSER/.zshrc" <<'EOF'
