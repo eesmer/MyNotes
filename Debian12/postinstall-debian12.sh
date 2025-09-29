@@ -29,3 +29,7 @@ apt-get install -y \
   ntfs-3g \
   python3 bpython3 \
   software-properties-common lsb-release
+
+apt-get -y install encfs
+apt-get -y install --install-recommends python3-pip
+
