@@ -86,8 +86,6 @@ apt-get -y install zsh fzf zsh-autosuggestions zsh-syntax-highlighting ripgrep
 apt-get -y install feathernotes atril pavucontrol unzip xfce4-terminal freerdp2-x11 vlc feh xdg-utils desktop-file-utils
 
 if update-alternatives --list x-terminal-emulator >/dev/null 2>&1; then
-  # Debian genelde wrapper'ı sağlar; listede ne var görmek istersen:
-  # update-alternatives --list x-terminal-emulator
   update-alternatives --set x-terminal-emulator /usr/bin/xfce4-terminal.wrapper 2>/dev/null || \
   update-alternatives --set x-terminal-emulator /usr/bin/xfce4-terminal 2>/dev/null || true
 fi
@@ -100,6 +98,24 @@ mkdir -p "/home/$MYUSER/.local/share/applications"
 chmod 0700 "/home/$MYUSER/.config"
 chmod 0700 "/home/$MYUSER/.local" "/home/$MYUSER/.local/share" "/home/$MYUSER/.local/applications"
 chown -R "$MYUSER:$MYUSER" "/home/$MYUSER/.config" "/home/$MYUSER/.local"
+
+cat >"/home/$MYUSE/.config/mimeapps.list" <<'EOF'
+[Default Applications]
+image/jpeg=feh.desktop
+image/png=feh.desktop
+image/gif=feh.desktop
+image/webp=feh.desktop
+image/bmp=feh.desktop
+image/tiff=feh.desktop
+video/mp4=vlc.desktop
+video/x-matroska=vlc.desktop
+video/x-msvideo=vlc.desktop
+video/webm=vlc.desktop
+video/x-ms-wmv=vlc.desktop
+video/mpeg=vlc.desktop
+application/pdf=atril.desktop
+inode/directory=Thunar.desktop
+EOF
 
 # === MY .zshrc CONFIG ===
 cat >"/home/$MYUSER/.zshrc" <<'EOF'
