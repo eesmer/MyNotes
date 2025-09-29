@@ -9,7 +9,7 @@
 # ----------------------------------------------------------
 # Should be run on the DC machine.
 # USAGE:
-# wget https://raw.githubusercontent.com/eesmer/SambaAD-HelperScripts/master/scripts/samba-activedirectory-reporting-tool.sh
+# wget https://raw.githubusercontent.com/eesmer/MyNotes/refs/heads/main/HelperScripts/SambaAD/samba-activedirectory-reporting-tool.sh
 # bash  samba-activedirectory-reporting-tool.sh
 # ----------------------------------------------------------
 
