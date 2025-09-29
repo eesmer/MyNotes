@@ -21,4 +21,5 @@ apt-get -y install $(apt search ^firmware- 2> /dev/null | grep ^firmware | grep 
 apt-get install -y \
   i3 xtrlock thunar zsh fzf \
   vim tmux openssh-server htop \
-  feathernotes atril pavucontrol unzip xfce4-terminal freerdp2-x11 vlc feh
+  feathernotes atril pavucontrol unzip xfce4-terminal freerdp2-x11 vlc feh \
+  firefox-esr chromium
