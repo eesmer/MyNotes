@@ -11,7 +11,7 @@
 # ----------------------------------------------------------------------
 # Should be run on the DC machine
 # USAGE:
-# wget https://raw.githubusercontent.com/eesmer/SambaAD-HelperScripts/master/scripts/samba-activedirectory-users-report.sh
+# wget https://raw.githubusercontent.com/eesmer/MyNotes/refs/heads/main/HelperScripts/SambaAD/samba-activedirectory-users-report.sh
 # bash  samba-activedirectory-users-report.sh
 # ----------------------------------------------------------------------
 
