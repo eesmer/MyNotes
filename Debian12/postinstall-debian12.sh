@@ -33,3 +33,9 @@ apt-get install -y \
 apt-get -y install encfs
 apt-get -y install --install-recommends python3-pip
 
+mkdir -p /usr/share/keyrings
+chmod 0755 /usr/share/keyrings
+curl -fsSL https://www.virtualbox.org/download/oracle_vbox_2016.asc | gpg --dearmor >/usr/share/keyrings/oracle-virtualbox.gpg
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/oracle-virtualbox.gpg] https://download.virtualbox.org/virtualbox/debian bookworm contrib" \
+	>/etc/apt/sources.list.d/virtualbox.list
+
