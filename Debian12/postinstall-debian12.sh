@@ -24,4 +24,5 @@ apt-get install -y \
   feathernotes atril pavucontrol unzip xfce4-terminal freerdp2-x11 vlc feh \
   firefox-esr chromium \
   libreoffice-writer libreoffice-calc libreoffice-impress \
-  git ack wget curl rsync dnsutils whois net-tools
+  git ack wget curl rsync dnsutils whois net-tools \
+  gnupg2 openvpn
