@@ -22,4 +22,6 @@ apt-get install -y \
   i3 xtrlock thunar zsh fzf \
   vim tmux openssh-server htop \
   feathernotes atril pavucontrol unzip xfce4-terminal freerdp2-x11 vlc feh \
-  firefox-esr chromium
+  firefox-esr chromium \
+  libreoffice-writer libreoffice-calc libreoffice-impress \
+  git ack wget curl rsync dnsutils whois net-tools
