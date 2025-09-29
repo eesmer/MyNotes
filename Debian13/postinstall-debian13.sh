@@ -116,6 +116,7 @@ video/mpeg=vlc.desktop
 application/pdf=atril.desktop
 inode/directory=Thunar.desktop
 EOF
+chmod 0644 "/home/$MYUSER/.config/mimeapps.list"
 
 # === MY .zshrc CONFIG ===
 cat >"/home/$MYUSER/.zshrc" <<'EOF'
