@@ -88,6 +88,7 @@ apt-get -y install ripgrep ack wget curl rsync dnsutils net-tools
 apt-get -y install mtr-tiny traceroute nmap htop lsof tcpdump iperf3 ncdu pv jq ca-certificates
 apt-get -y install pinentry-curses git-credential-libsecret git-delta ca-certificates
 apt-get -y install firefox-esr chromium
+apt-get -y install libreoffice-writer libreoffice-calc libreoffice-impress
 # gocryptfs wireguard-tools gnupg 
 
 if update-alternatives --list x-terminal-emulator >/dev/null 2>&1; then
