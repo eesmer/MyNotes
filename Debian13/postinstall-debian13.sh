@@ -86,7 +86,7 @@ apt-get -y install zsh fzf zsh-autosuggestions zsh-syntax-highlighting
 apt-get -y install feathernotes atril pavucontrol unzip xfce4-terminal freerdp2-x11 vlc feh xdg-utils desktop-file-utils
 apt-get -y install ripgrep ack wget curl rsync dnsutils net-tools
 apt-get -y install mtr-tiny traceroute nmap htop lsof tcpdump iperf3 ncdu pv jq ca-certificates
-apt-get -y install pinentry-curses git-credential-libsecret git-delta ca-certificates
+apt-get -y install pinentry-curses git git-credential-libsecret git-delta ca-certificates
 apt-get -y install firefox-esr chromium
 apt-get -y install libreoffice-writer libreoffice-calc libreoffice-impress
 # gocryptfs wireguard-tools gnupg 
