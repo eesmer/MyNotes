@@ -36,7 +36,11 @@ deb http://deb.debian.org/debian trixie-updates main contrib non-free non-free-f
 deb http://deb.debian.org/debian-security trixie-security main contrib non-free-firmware
 deb http://deb.debian.org/debian trixie-backports main contrib non-free non-free-firmware
 EOF
-grep -q '^deb .*\(brave-browser-apt-release\|brave.com\)' /etc/apt/sources.list || echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main' >> /etc/apt/sources.list
+grep -q '^deb .*\(brave-browser-apt-release\|brave.com\)' /etc/apt/sources.list || \
+	echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main' >> /etc/apt/sources.list
+curl -fsSL https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google-chrome.gpg
+grep -q '^deb .*/linux/chrome/deb' /etc/apt/sources.list || \
+	echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] https://dl.google.com/linux/chrome/deb/ stable main' >> /etc/apt/sources.list
 chmod 644 /etc/apt/sources.list
 
 apt-get update
