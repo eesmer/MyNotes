@@ -4,7 +4,7 @@
 # Debian13-postinstall.sh
 # This script customizes my Debian installation for personal use.
 # It includes the tools and configurations I use.
-# Tested with Debian 13
+# Prepared for Debian 13 / Tested with Debian 13
 #-------------------------------------------------------------------------
 
 set -euo pipefail
