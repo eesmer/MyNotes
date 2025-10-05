@@ -29,14 +29,17 @@ timedatectl set-ntp true
 # === MYUSER Settings ===
 usermod -aG sudo "$MYUSER"
 
-# === APT/REPOS ===
+# === APT REPO / CUSTOM REPO ===
 cat > /etc/apt/sources.list <<'EOF'
 deb http://deb.debian.org/debian trixie main contrib non-free non-free-firmware
 deb http://deb.debian.org/debian trixie-updates main contrib non-free non-free-firmware
 deb http://deb.debian.org/debian-security trixie-security main contrib non-free-firmware
 deb http://deb.debian.org/debian trixie-backports main contrib non-free non-free-firmware
 EOF
+grep -q '^deb .*\(brave-browser-apt-release\|brave.com\)' /etc/apt/sources.list || echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main' >> /etc/apt/sources.list
 chmod 644 /etc/apt/sources.list
+
+apt-get update
 
 # === TIME/SYNC ===
 mkdir -p /etc/systemd/timesyncd.conf.d
@@ -47,7 +50,6 @@ FallbackNTP=time.google.com pool.ntp.org
 EOF
 systemctl restart systemd-timesyncd
 
-apt-get update
 apt-get install -y locales
 sed -i 's/^# *\(en_US.UTF-8\)/\1/' /etc/locale.gen
 sed -i 's/^# *\(tr_TR.UTF-8\)/\1/' /etc/locale.gen
@@ -68,9 +70,7 @@ Acquire::Retries "3";
 Dpkg::Options { "--force-confdef"; "--force-confold"; };
 EOF
 
-apt-get update && apt-get -y full-upgrade && apt-get -y autoremove --purge && apt-get -y autoclean
-
-# PACKAGES
+# === PACKAGES ===
 grep -qi 'GenuineIntel' /proc/cpuinfo && apt-get -y install intel-microcode || grep -qi 'AuthenticAMD' /proc/cpuinfo && apt-get -y install amd64-microcode || true
 apt-get -y install isenkram-cli && isenkram-autoinstall-firmware || true
 apt-get -y install xserver-xorg xserver-xorg-input-libinput xauth
@@ -90,6 +90,8 @@ apt-get -y install pinentry-curses git git-credential-libsecret git-delta
 apt-get -y install firefox-esr chromium
 apt-get -y install libreoffice-writer libreoffice-calc libreoffice-impress
 # gocryptfs wireguard-tools gnupg 
+
+apt-get update && apt-get -y full-upgrade && apt-get -y autoremove --purge && apt-get -y autoclean
 
 if update-alternatives --list x-terminal-emulator >/dev/null 2>&1; then
   update-alternatives --set x-terminal-emulator /usr/bin/xfce4-terminal.wrapper 2>/dev/null || \
