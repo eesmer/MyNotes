@@ -133,7 +133,11 @@ EOF
 chmod 0644 "/home/$MYUSER/.config/mimeapps.list"
 
 # === DAILY SCRIPTS ===
-wget -r -np -nH --cut-dirs=2 -R "index.html*" -N -P ./daily-scripts https://esmerkan.com/fileserver/daily-scripts/
+TMPDIR="$(mktemp -d daily-scripts.tmp.XXX)"
+wget -r -np -nH --cut-dirs=2 -R "index.html*" -N -P /tmp/$TMPDIR https://esmerkan.com/fileserver/daily-scripts/
+mv $TMPDIR/ /home/$MYUSER/daily-scripts
+find "/home/$MYUSER" -type d -exec chmod 755 {} \;
+find "/home/$MYUSER" -type f -exec chmod 644 {} \;
 
 # === MY .zshrc CONFIG ===
 cat >"/home/$MYUSER/.zshrc" <<'EOF'
