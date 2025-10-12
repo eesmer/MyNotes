@@ -213,7 +213,6 @@ source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 zstyle ':completion:*:*:vim:*' file-sort modification
 autoload -Uz colors && colors
 PROMPT='%F{cyan}%n@%m%f:%F{yellow}%~%f %# '
-
 EOF
 
 chown "$MYUSER:$MYUSER" "/home/$MYUSER/.zshrc"
