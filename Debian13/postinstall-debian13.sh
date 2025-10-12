@@ -161,6 +161,7 @@ alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias ......='cd ../../../../..'
 alias off='sudo poweroff'
+alias my='bash ~/daily-scripts/erkan-desktop.sh'
 
 # === Color ZSH Completion (Use LS_COLORS Pallet) ===
 zmodload zsh/complist
