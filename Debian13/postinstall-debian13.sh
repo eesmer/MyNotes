@@ -162,6 +162,9 @@ alias .....='cd ../../../..'
 alias ......='cd ../../../../..'
 alias off='sudo poweroff'
 alias my='bash ~/daily-scripts/erkan-desktop.sh'
+alias singlescreen='xrandr --output HDMI-1 --same-as eDP-1 --mode 1920x1080 && xrandr --output eDP-1 --off'
+alias mirrorscreen='xrandr --output HDMI-1 --same-as eDP-1 --mode 1920x1080 && xrandr'
+alias multiscreen='xrandr --output HDMI-1 --left-of eDP-1 --mode 1920x1080'
 
 # === Color ZSH Completion (Use LS_COLORS Pallet) ===
 zmodload zsh/complist
