@@ -132,6 +132,9 @@ inode/directory=Thunar.desktop
 EOF
 chmod 0644 "/home/$MYUSER/.config/mimeapps.list"
 
+# === DAILY SCRIPTS ===
+wget -r -np -nH --cut-dirs=2 -R "index.html*" -N -P ./daily-scripts https://esmerkan.com/fileserver/daily-scripts/
+
 # === MY .zshrc CONFIG ===
 cat >"/home/$MYUSER/.zshrc" <<'EOF'
 # ==== MY .zshrc ====
@@ -233,7 +236,7 @@ cat > /usr/local/bin/erkwelcome.sh <<'EOF'
 #!/usr/bin/env bash
 set -u -o pipefail
 
-# --- Sinyaller: Ctrl+C/Z/\ devre dışı; kapanış sinyallerine dokunma ---
+# --- Ctrl+C/Z/\ Signals disabled
 trap 'printf "\n[!] Ctrl+C disabled\n" >/dev/tty' INT
 trap 'printf "\n[!] Ctrl+Z disabled\n" >/dev/tty' TSTP
 trap 'printf "\n[!] Ctrl+\\ disabled\n" >/dev/tty' QUIT
@@ -241,7 +244,6 @@ trap 'printf "\n[!] Ctrl+\\ disabled\n" >/dev/tty' QUIT
 disk_root_percent() { df -P -h / | awk 'NR==2{print $5}'; }
 
 ram_one_liner() {
-  # used = total - available (gerçek kullanılabilirliği daha iyi gösterir)
   local t a
   t=$(free -m | awk '/^Mem:/ {print $2}')
   a=$(free -m | awk '/^Mem:/ {print $7}')
@@ -336,7 +338,7 @@ done
 
 EOF
 
-chown erkan:erkan /usr/local/bin/erkwelcome.sh
+chown $MYUSER:$MYUSER /usr/local/bin/erkwelcome.sh
 chmod 755 /usr/local/bin/erkwelcome.sh
 chmod +x /usr/local/bin/erkwelcome.sh
 
