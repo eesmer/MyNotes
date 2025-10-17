@@ -49,6 +49,16 @@ whiptail --msgbox \
         \nhttps://github.com/eesmer/DebianDC \
         \nLogs:$LOGFILE" 20 90 45
 
+#--------------------
+# Controls
+#--------------------
+CHECKRUN_ROOT() {
+if ! [[ $EUID -eq 0 ]]; then
+        echo -e "${RED}${BOLD}This script should only be run as root user.${NOCOL}" | tee -a $LOGFILE
+        exit 1
+fi
+}
+
 UPDATE_CONTROL() {
     $GREEN
     echo "Internet and repository access is controlled"
@@ -63,14 +73,6 @@ UPDATE_CONTROL() {
     fi
 }
 
-CHECKRUN_ROOT() {
-if ! [[ $EUID -eq 0 ]]; then
-	$RED
-	echo "This script must be run with root user"
-	$NOCOL
-	exit 1
-fi
-}
 
 CHECK_DISTRO() {
 cat /etc/*-release /etc/issue > "/tmp/distrocheck"
