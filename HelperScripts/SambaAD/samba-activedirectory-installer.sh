@@ -108,7 +108,36 @@ SAMBAAD_INSTALL() {
         return
     fi
 
+    whiptail --yesno "Domain: $REALM\nHostname: $HNAME\n\nDo you want to start the installation?" 0 0 0
+    ANSWER=$?
+    if [ $ANSWER -ne 0 ]; then echo "User canceled" | tee -a $LOGFILE; exit 1; fi
 
+    DOMAIN=$(echo $REALM | cut -d "." -f1)
+    SERVER_IP=$(hostname -I | awk '{print $1}')
+
+    echo -e "${YELLOW}Installation is starting... Installation Info: HNAME=$HNAME, REALM=$REALM, DOMAIN=$DOMAIN, IP=$SERVER_IP${NOCOL}" | tee -a $LOGFILE
+
+    echo -e "${GREEN}Hostname and /etc/hosts updating...${NOCOL}" | tee -a $LOGFILE
+    hostnamectl set-hostname $HNAME.$REALM
+    sed -i "/127.0.1.1/ c $SERVER_IP $HNAME.$REALM $HNAME $REALM" /etc/hosts
+    # sed -i "/127.0.1.1/ c 127.0.1.1 $HNAME.$REALM $HNAME $REALM" /etc/hosts
+
+    echo -e "${GREEN}Necessary packages are installing... (Log: $LOGFILE)${NOCOL}" | tee -a $LOGFILE
+    export DEBIAN_FRONTEND=noninteractive
+
+    apt-get -y update >> $LOGFILE 2>&1
+    apt-get -y upgrade >> $LOGFILE 2>&1
+    apt-get -y autoremove >> $LOGFILE 2>&1
+
+    apt-get -y install bind9 bind9utils dnsutils >> $LOGFILE 2>&1
+    apt-get -y install samba samba-common-bin >> $LOGFILE 2>&1
+    apt-get -y install krb5-user krb5-config >> $LOGFILE 2>&1
+    apt-get -y install chrony >> $LOGFILE 2>&1
+    apt-get -y install dnsutils net-tools openssh-server >> $LOGFILE 2>&1
+
+    systemctl stop smbd nmbd winbind > /dev/null 2>&1
+    systemctl disable smbd nmbd winbind > /dev/null 2>&1
+    systemctl mask smbd nmbd winbind > /dev/null 2>&1
 
 SAMBAAD_INSTALL() {
 	HNAME=$(whiptail --inputbox "Enter DC Machine Hostname (e.g.,DC01)" 10 50 --title "DC Hostname" --backtitle "DC Hostname" 3>&1 1>&2 2>&3)
