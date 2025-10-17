@@ -201,6 +201,13 @@ options {
 };
 EOF
 
+# named.conf.local
+    cat > /etc/bind/named.conf.local << EOF
+dlz "$REALM" {
+        database "dlopen $DLZ_PATH";
+};
+EOF
+
 SAMBAAD_INSTALL() {
 	HNAME=$(whiptail --inputbox "Enter DC Machine Hostname (e.g.,DC01)" 10 50 --title "DC Hostname" --backtitle "DC Hostname" 3>&1 1>&2 2>&3)
         ANSWER=$?
