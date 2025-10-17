@@ -176,6 +176,17 @@ SAMBAAD_INSTALL() {
     systemctl enable chrony > /dev/null 2>&1
     systemctl restart chrony
 
+    echo -e "${GREEN}BIND9 DLZ Configuration...${NOCOL}" | tee -a $LOGFILE
+
+    # dlz_bind9_.so find path
+    DLZ_PATH=$(dpkg -L samba-common-bin | grep dlz_bind9 | head -n 1)
+
+    if [ -z "$DLZ_PATH" ]; then
+        echo -e "${YELLOW}Warning: The dlz_bind9 module path was not found. The default path is being used.${NOCOL}" | tee -a $LOGFILE
+        # Debian 12/13 default path x86_64
+        DLZ_PATH="/usr/lib/x86_64-linux-gnu/samba/bind9/dlz_bind9_10.so"
+    fi
+
 SAMBAAD_INSTALL() {
 	HNAME=$(whiptail --inputbox "Enter DC Machine Hostname (e.g.,DC01)" 10 50 --title "DC Hostname" --backtitle "DC Hostname" 3>&1 1>&2 2>&3)
         ANSWER=$?
