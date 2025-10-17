@@ -187,6 +187,20 @@ SAMBAAD_INSTALL() {
         DLZ_PATH="/usr/lib/x86_64-linux-gnu/samba/bind9/dlz_bind9_10.so"
     fi
 
+# named.conf.options
+    cat > /etc/bind/named.conf.options << EOF
+options {
+        directory "/var/cache/bind";
+        forwarders { 8.8.8.8; 8.8.4.4; };
+        allow-query { any; };
+        dnssec-validation no;
+        auth-nxdomain no;    # RFC1035
+        listen-on-v6 { any; };
+        tkey-gssapi-keytab "/var/lib/samba/bind-dns/dns.keytab";
+        minimal-responses yes;
+};
+EOF
+
 SAMBAAD_INSTALL() {
 	HNAME=$(whiptail --inputbox "Enter DC Machine Hostname (e.g.,DC01)" 10 50 --title "DC Hostname" --backtitle "DC Hostname" 3>&1 1>&2 2>&3)
         ANSWER=$?
