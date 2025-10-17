@@ -33,8 +33,11 @@ BOLD=$(tput bold)
 MIN_DEBIAN_VER=11
 LOGFILE="/var/log/samba-ad-install.log"
 
+#---------------------
+# InfoBox
+#---------------------
 whiptail --msgbox \
-        ".:: Samba Active Directory Domain Controller Installer ::. \
+        ".:: Samba Active Directory Domain Controller Installer (for Debian 13) ::. \
         \n---------------------------------------------------------------- \
         \nThis program is distributed for the purpose of being useful. \
         \nThis program installs Samba Active Directory. \
@@ -43,7 +46,8 @@ whiptail --msgbox \
         \n---------------------------------------------------------------- \
         \n\nhttps://github.com/eesmer/SambaAD-HelperScripts \
         \nhttps://github.com/eesmer/sambadtui \
-        \nhttps://github.com/eesmer/DebianDC" 20 90 45
+        \nhttps://github.com/eesmer/DebianDC \
+        \nLogs:$LOGFILE" 20 90 45
 
 UPDATE_CONTROL() {
     $GREEN
