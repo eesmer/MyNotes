@@ -153,7 +153,28 @@ SAMBAAD_INSTALL() {
     sed -i "/server services =/a log level = 2" /etc/samba/smb.conf
     sed -i "/log level =/a log file = /var/log/samba/$REALM.log" /etc/samba/smb.conf
     sed -i "/log file =/a debug timestamp = yes" /etc/samba/smb.conf
-    
+
+    echo -e "${GREEN}Kerberos and DNS settings...${NOCOL}" | tee -a $LOGFILE
+    rm -f /etc/krb5.conf
+    cp /var/lib/samba/private/krb5.conf /etc/
+
+    echo "search $REALM" > /etc/resolv.conf
+    echo "nameserver 127.0.0.1" >> /etc/resolv.conf
+
+    echo -e "${GREEN}Time sync settings...${NOCOL}" | tee -a $LOGFILE
+    systemctl stop chrony > /dev/null 2>&1
+
+    CHRONY_CONF="/etc/chrony/chrony.conf"
+    sed -i '/^pool /d' $CHRONY_CONF # all pool line deleted
+    echo "pool 0.debian.pool.ntp.org iburst" >> $CHRONY_CONF # Debian default pool
+    echo "allow 0.0.0.0/0" >> $CHRONY_CONF
+    echo "ntpsigndsocket  /var/lib/samba/ntp_signd" >> $CHRONY_CONF
+
+    chown root:_chrony /var/lib/samba/ntp_signd/
+    chmod 750 /var/lib/samba/ntp_signd/
+
+    systemctl enable chrony > /dev/null 2>&1
+    systemctl restart chrony
 
 SAMBAAD_INSTALL() {
 	HNAME=$(whiptail --inputbox "Enter DC Machine Hostname (e.g.,DC01)" 10 50 --title "DC Hostname" --backtitle "DC Hostname" 3>&1 1>&2 2>&3)
