@@ -60,19 +60,14 @@ fi
 }
 
 UPDATE_CONTROL() {
-    $GREEN
-    echo "Internet and repository access is controlled"
-    $NOCOL
-    UPDATE_OUTPUT=$(apt update 2>&1)
-    if echo "$UPDATE_OUTPUT" | grep -qE "(Failed to fetch|Temporary failure resolving|Could not resolve|Some index files failed to download)"; then
-        $RED
-        echo "Some errors occurred during apt update. Please check internet or repository access."
-        echo "$UPDATE_OUTPUT" #> $LOGFILE
-        $NOCOL
+    echo -e "${GREEN}Internet and repo access is controlled...${NOCOL}" | tee -a $LOGFILE
+    apt update > /dev/null 2>&1
+    if [ $? -ne 0 ]; then
+        echo -e "${RED}An error occurred while updating APT. Please check your internet or repository access.${NOCOL}" | tee -a $LOGFILE
         exit 1
     fi
+    echo -e "${GREEN}Access control successfull${NOCOL}" | tee -a $LOGFILE
 }
-
 
 CHECK_DISTRO() {
 cat /etc/*-release /etc/issue > "/tmp/distrocheck"
