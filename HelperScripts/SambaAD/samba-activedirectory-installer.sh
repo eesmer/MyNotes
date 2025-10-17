@@ -70,33 +70,20 @@ UPDATE_CONTROL() {
 }
 
 CHECK_DISTRO() {
-cat /etc/*-release /etc/issue > "/tmp/distrocheck"
-grep "debian" "/tmp/distrocheck" >/dev/null
-if [[ $? = 0 ]]; then
-	DIST=DEB
-fi
-rm /tmp/distrocheck
-# Not support message
-if [[ $DIST = DEB ]]; then
-	VER=$(cat /etc/debian_version | cut -d "." -f1)
-	if [[ $VER -lt 11 ]]; then
-		$RED
-		echo -e
-		echo "-------------------------------------------------------------------------------------"
-		echo -e "This script has been tested with Debian 11 and Debian 12 \nIt is recommended to use it with Debian 11 or Debian 12"
-		echo "-------------------------------------------------------------------------------------"
-		echo -e
-		$NOCOL
-		exit 1
-	fi
-else
-	$RED
-	echo -e
-	echo "-------------------------------------------------------------------------------------"
-	echo -e "This script has been tested in Debian environment.\nIt is compatible with Debian. "
-	echo "-------------------------------------------------------------------------------------"
-	$NOCOL
-fi
+    DIST=$(grep -E '^ID=' /etc/*-release 2>/dev/null | cut -d= -f2 | tr -d '"' | head -n 1)
+    if [[ "$DIST" != "debian" ]]; then
+        echo -e "${RED}${BOLD}This script has only been tested in a Debian environment. It is Debian compatible.${NOCOL}" | tee -a $LOGFILE
+        exit 1
+    fi
+
+    VER=$(cat /etc/debian_version | cut -d "." -f1)
+    if [[ $VER -lt $MIN_DEBIAN_VER ]]; then
+        echo -e "${YELLOW}-------------------------------------------------------------------------------------${NOCOL}" | tee -a $LOGFILE
+        echo -e "${RED}This script is compatible with at least Debian $MIN_DEBIAN_VER (Bullseye) Current Ver: Debian $VER${NOCOL}" | tee -a $LOGFILE
+        echo -e "${YELLOW}-------------------------------------------------------------------------------------${NOCOL}" | tee -a $LOGFILE
+        exit 1
+    fi
+    echo -e "${GREEN}Debian $VER version detected as compatible. (Min. version: $MIN_DEBIAN_VER)${NOCOL}" | tee -a $LOGFILE
 }
 
 SAMBAAD_INSTALL() {
