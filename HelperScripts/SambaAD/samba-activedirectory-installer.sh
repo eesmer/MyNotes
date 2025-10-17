@@ -10,7 +10,7 @@
 # ------------------------------------------------------------------
 # This script has been tested in Debian environment.
 # It is compatible with Debian
-# It should be run in a Debian 11 or Debian 12 environment.
+# It should be run in a Debian 11, 12 and 13 (trixie) environment.
 # ------------------------------------------------------------------
 # USAGE:
 # wget https://raw.githubusercontent.com/eesmer/MyNotes/refs/heads/main/HelperScripts/SambaAD/samba-activedirectory-installer.sh
