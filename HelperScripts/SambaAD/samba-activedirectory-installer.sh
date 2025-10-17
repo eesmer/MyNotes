@@ -86,6 +86,30 @@ CHECK_DISTRO() {
     echo -e "${GREEN}Debian $VER version detected as compatible. (Min. version: $MIN_DEBIAN_VER)${NOCOL}" | tee -a $LOGFILE
 }
 
+#-------------------------------------------------------------------
+# Install and Configuration
+#-------------------------------------------------------------------
+SAMBAAD_INSTALL() {
+    HNAME=$(whiptail --inputbox "DC Hostname (örn: DC01)" 10 50 --title "DC Hostname" --backtitle "Samba AD Installer" 3>&1 1>&2 2>&3)
+    ANSWER=$?
+    if [ $ANSWER -ne 0 ]; then echo "User canceled." | tee -a $LOGFILE; exit 1; fi
+
+    REALM=$(whiptail --inputbox "Domain Name (örn: EXAMPLE.LOC)" 10 50 --title "Domain Name" --backtitle "Samba AD Installer" 3>&1 1>&2 2>&3 | tr '[:lower:]' '[:upper:]')
+    ANSWER=$?
+    if [ $ANSWER -ne 0 ]; then echo "User canceled." | tee -a $LOGFILE; exit 1; fi
+
+    PASSWORD=$(whiptail --passwordbox "Administrator Password" 10 50 --title "Administrator Password" --backtitle "Samba AD Installer" 3>&1 1>&2 2>&3)
+    ANSWER=$?
+    if [ $ANSWER -ne 0 ]; then echo "User canceled." | tee -a $LOGFILE; exit 1; fi
+
+    if [ -z "$HNAME" ] || [ -z "$REALM" ] || [ -z "$PASSWORD" ]; then
+        whiptail --msgbox "Please fill in all fields." --title "Hata" 0 0 0
+        SAMBAAD_INSTALL
+        return
+    fi
+
+
+
 SAMBAAD_INSTALL() {
 	HNAME=$(whiptail --inputbox "Enter DC Machine Hostname (e.g.,DC01)" 10 50 --title "DC Hostname" --backtitle "DC Hostname" 3>&1 1>&2 2>&3)
         ANSWER=$?
