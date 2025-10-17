@@ -139,6 +139,22 @@ SAMBAAD_INSTALL() {
     systemctl disable smbd nmbd winbind > /dev/null 2>&1
     systemctl mask smbd nmbd winbind > /dev/null 2>&1
 
+    echo -e "${GREEN}Samba Domain Controller is Preparing...${NOCOL}" | tee -a $LOGFILE
+    rm -f /etc/samba/smb.conf
+    samba-tool domain provision --server-role=dc --use-rfc2307 --realm="$REALM" --domain="$DOMAIN" --adminpass="$PASSWORD" --dns-backend=BIND9_DLZ >> $LOGFILE 2>&1
+    if [ $? -ne 0 ]; then
+        echo -e "${RED}${BOLD}ERROR: Samba Provisioning failed. Check the log file: $LOGFILE${NOCOL}" | tee -a $LOGFILE
+        exit 1
+    fi
+
+    echo -e "${GREEN}smb.conf updating...${NOCOL}" | tee -a $LOGFILE
+    sed -i 's/dns forwarder = .*/server services = -dns/' /etc/samba/smb.conf
+
+    sed -i "/server services =/a log level = 2" /etc/samba/smb.conf
+    sed -i "/log level =/a log file = /var/log/samba/$REALM.log" /etc/samba/smb.conf
+    sed -i "/log file =/a debug timestamp = yes" /etc/samba/smb.conf
+    
+
 SAMBAAD_INSTALL() {
 	HNAME=$(whiptail --inputbox "Enter DC Machine Hostname (e.g.,DC01)" 10 50 --title "DC Hostname" --backtitle "DC Hostname" 3>&1 1>&2 2>&3)
         ANSWER=$?
