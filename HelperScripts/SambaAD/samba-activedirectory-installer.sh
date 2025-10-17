@@ -214,6 +214,8 @@ RESOLVCONF=no
 OPTIONS="-4 -u bind"
 EOF
 
+chmod 644 /etc/default/named
+
 SAMBAAD_INSTALL() {
 	HNAME=$(whiptail --inputbox "Enter DC Machine Hostname (e.g.,DC01)" 10 50 --title "DC Hostname" --backtitle "DC Hostname" 3>&1 1>&2 2>&3)
         ANSWER=$?
