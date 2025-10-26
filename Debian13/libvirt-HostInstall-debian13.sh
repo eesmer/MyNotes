@@ -20,3 +20,5 @@ fi
 apt-get update
 apt-get -y install qemu-kvm libvirt-daemon-system libvirt-clients qemu-utils virtinst bridge-utils netfilter-persistent cpu-checker
 
+systemctl enable --now libvirtd
+
