@@ -16,3 +16,7 @@ else
     exit 1
 fi
 
+# Install Packages
+apt-get update
+apt-get -y install qemu-kvm libvirt-daemon-system libvirt-clients qemu-utils virtinst bridge-utils netfilter-persistent cpu-checker
+
