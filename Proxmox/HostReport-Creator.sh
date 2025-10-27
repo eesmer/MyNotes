@@ -107,3 +107,21 @@ pvesh get /cluster/resources --type vm \
     }' | sort -k4 -nr | head -n "10"
 echo $NEWLINE
 
+echo $BARLINE
+echo "=== VM ANALYSIS ==="
+pvesh get /cluster/resources --type vm 2>/dev/null
+pvesh get /cluster/resources --type vm 2>/dev/null > vm_analysis.txt
+pvesh get /cluster/resources --type vm --output-format json 2>/dev/null | jq '
+map(
+select(.type == "qemu") |
+.diskread /= 1073741824 |
+.diskwrite /= 1073741824 |
+.netin /= 1073741824 |
+.netout /= 1073741824 |
+.maxdisk /= 1073741824 |
+.maxmem /= 1073741824 |
+.mem /= 1073741824 |
+.uptime /= 86400
+)
+' > vm_analysis.json
+
