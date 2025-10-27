@@ -125,3 +125,6 @@ select(.type == "qemu") |
 )
 ' > vm_analysis.json
 
+echo "Finish - $DATE"
+echo -e
+
