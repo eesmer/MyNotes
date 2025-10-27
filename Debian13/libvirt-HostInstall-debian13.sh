@@ -22,3 +22,7 @@ apt-get -y install qemu-kvm libvirt-daemon-system libvirt-clients qemu-utils vir
 
 systemctl enable --now libvirtd
 
+# Virtual NW Config
+virsh net-destroy default 2>/dev/null
+virsh net-undefine default 2>/dev/null
+
