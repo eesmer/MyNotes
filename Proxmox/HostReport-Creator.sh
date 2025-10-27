@@ -63,3 +63,10 @@ echo $NEWLINE
 echo $BARLINE
 echo $NEWLINE
 
+echo $BARLINE
+echo "=== CLUSTER INFO ==="
+pvecm status
+echo $NEWLINE
+pvecm nodes
+echo $NEWLINE
+
