@@ -53,3 +53,13 @@ echo $NEWLINE
 echo $BARLINE
 echo $NEWLINE
 
+echo $BARLINE
+echo "=== DISK INFO & USAGE ==="
+df -lh
+echo $NEWLINE
+echo "== Disk IO Analysis =="
+iostat -xz 5 2
+echo $NEWLINE
+echo $BARLINE
+echo $NEWLINE
+
