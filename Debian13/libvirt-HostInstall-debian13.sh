@@ -26,3 +26,15 @@ systemctl enable --now libvirtd
 virsh net-destroy default 2>/dev/null
 virsh net-undefine default 2>/dev/null
 
+NETWORK_BR1="/tmp/network-br1.xml"
+cat << EOF > "$NETWORK_BR1"
+<network>
+<name>br1-net</name>
+<bridge name='br1'/>
+<forward mode='nat'/>
+<ip address='10.1.1.1' netmask='255.255.255.0'>
+<dhcp start='10.1.1.100' end='10.1.1.200'/>
+</ip>
+</network>
+EOF
+
