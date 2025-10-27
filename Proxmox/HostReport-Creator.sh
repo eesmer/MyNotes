@@ -39,3 +39,7 @@ echo "=== STORAGE POOLS INFO ==="
 pvesm status
 echo $NEWLINE
 
+echo "== ZFS Info  =="
+zfs list -r -o name,used,avail,refer,mountpoint,compression,dedup
+echo $NEWLINE
+
