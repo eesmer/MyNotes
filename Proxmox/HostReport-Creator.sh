@@ -77,3 +77,18 @@ echo $NEWLINE
 pct list
 echo $NEWLINE
 
+echo $BARLINE
+echo "=== VMs USING THE MOST CPU ==="
+pvesh get /cluster/resources --type vm \
+  | awk '
+    /^{/ {rec=$0}
+    /}/  {print rec $0}
+  ' 2>/dev/null | \
+  sed 's/[{}",]//g;s/:/ /g' | \
+  awk '
+    {for(i=1;i<=NF;i++){ if($i=="vmid") vmid=$(i+1); if($i=="name") name=$(i+1); if($i=="cpu") cpu=$(i+1); if($i=="mem") mem=$(i+1); if($i=="maxmem") maxmem=$(i+1)}
+     if(vmid!=""){printf "%6s %-25s %8.2f %%CPU  %8.2f %%MEM\n", vmid, name, cpu*100, (maxmem>0? (mem/maxmem*100):0)}
+     vmid=name=cpu=mem=maxmem=""
+    }' | sort -k4 -nr | head -n "10"
+echo $NEWLINE
+
