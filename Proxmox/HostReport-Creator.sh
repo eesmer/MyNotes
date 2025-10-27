@@ -27,3 +27,15 @@ echo "== TOP Outputs =="
 top -b -n1 | head -n10
 echo $NEWLINE
 
+echo $BARLINE
+echo "=== PACKAGES VERSION INFO ==="
+pveversion
+echo $NEWLINE
+echo $BARLINE
+echo $NEWLINE
+
+echo $BARLINE
+echo "=== STORAGE POOLS INFO ==="
+pvesm status
+echo $NEWLINE
+
