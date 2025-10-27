@@ -43,3 +43,13 @@ echo "== ZFS Info  =="
 zfs list -r -o name,used,avail,refer,mountpoint,compression,dedup
 echo $NEWLINE
 
+echo "== Logical Volume Info  =="
+lvs -o vg_name,lv_name,lv_size,lv_attr --noheadings --separator "     "
+echo $NEWLINE
+
+echo "== Volume Group Info  =="
+vgs -o vg_name,vg_size,vg_free,lv_count,pv_count --noheadings --separator "  "
+echo $NEWLINE
+echo $BARLINE
+echo $NEWLINE
+
