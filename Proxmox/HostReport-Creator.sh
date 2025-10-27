@@ -70,3 +70,10 @@ echo $NEWLINE
 pvecm nodes
 echo $NEWLINE
 
+echo $BARLINE
+echo "=== VM/CT INFO ==="
+qm list
+echo $NEWLINE
+pct list
+echo $NEWLINE
+
