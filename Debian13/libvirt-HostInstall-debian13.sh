@@ -7,6 +7,31 @@
 # - Sets up firewall settings
 # --------------------------------------------------
 
+#------------------
+# Color Codes
+#------------------
+SUCCESS='\033[0;32m' #GREEN
+ERROR='\033[0;31m'   #RED
+INFO='\033[0;36m'    #CYAN
+WARNING='\033[0;33m' #YELLOW
+NC='\033[0m'         #NoColor
+
+function handle_error {
+    local last_command="$BASH_COMMAND"
+    local exit_code="$?"
+    local line_number="$1"
+
+    echo -e "\n${ERROR}--------------------------------------------------------------${NC}"
+    echo -e "${ERROR}ERROR${NC}[Code: ${exit_code}] Stopped!"
+    echo -e "${INFO}Line Number:${NC}${line_number}"
+    echo -e "${INFO}Last Command:${NC}${last_command}"
+    echo -e "${INFO}Description:${NC}${last_command} ${WARNING}command failed.${NOCOL}"
+    echo -e "${ERROR}----------------------------------------------------------------${NC}\n"
+
+    exit 1
+}
+
+
 # KVM-OK Test
 echo "Host Virtualization Control:"
 if kvm-ok; then
