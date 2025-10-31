@@ -31,6 +31,7 @@ function handle_error {
     exit 1
 }
 
+trap 'handle_error $LINENO' ERR
 
 # KVM-OK Test
 echo "Host Virtualization Control:"
