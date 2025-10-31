@@ -17,7 +17,7 @@ else
 fi
 
 # Install Packages
-apt-get update
+apt-get update || { echo -e "\nError: Repository update failed. Check your internet connection or repository list."; }
 apt-get -y install qemu-kvm libvirt-daemon-system libvirt-clients qemu-utils virtinst bridge-utils netfilter-persistent cpu-checker
 
 systemctl enable --now libvirtd
