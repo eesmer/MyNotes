@@ -17,8 +17,8 @@ else
 fi
 
 # Install Packages
-apt-get update || { echo -e "\nError: Repository update failed. Check your internet connection or repository list."; }
-apt-get -y install qemu-kvm libvirt-daemon-system libvirt-clients qemu-utils virtinst bridge-utils netfilter-persistent cpu-checker
+apt-get update || { echo -e "\nError: Repository update failed. Check your internet connection or repository list."; exit 1; }
+apt-get -y install qemu-kvm libvirt-daemon-system libvirt-clients qemu-utils virtinst bridge-utils netfilter-persistent cpu-checker || { echo -e "\nError: Required packages could not be installed"; exit 1; }
 
 systemctl enable --now libvirtd
 
