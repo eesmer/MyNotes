@@ -128,6 +128,8 @@ select(.type == "qemu") |
 echo $NEWLINE
 echo $BARLINE
 echo "== Log Summary  =="
+echo "Authentication Fail Log Records"
+journalctl -p err -r | grep "authentication failure"
 
 echo "Finish - $DATE"
 echo -e
