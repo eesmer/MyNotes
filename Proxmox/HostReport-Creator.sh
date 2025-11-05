@@ -130,6 +130,10 @@ echo $BARLINE
 echo "== Log Summary  =="
 echo "Authentication Fail Log Records"
 journalctl -p err -r | grep "authentication failure"
+echo $NEWLINE
+echo "Connection Time Out Log Records"
+journalctl -p err -r -o cat | grep "connection timed out" | sort | uniq
+echo $BARLINE
 
 echo "Finish - $DATE"
 echo -e
