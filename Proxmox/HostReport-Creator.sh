@@ -125,6 +125,10 @@ select(.type == "qemu") |
 )
 ' > vm_analysis.json
 
+echo $NEWLINE
+echo $BARLINE
+echo "== Log Summary  =="
+
 echo "Finish - $DATE"
 echo -e
 
