@@ -93,4 +93,5 @@ virt-install \
     --location $ISO_PATH/debian-13.0.0-amd64-netinst.iso \
     --graphics vnc,listen=0.0.0.0 \
     --console pty,target_type=serial \
+    --noautoconsole
 
