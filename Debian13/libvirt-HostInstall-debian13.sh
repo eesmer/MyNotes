@@ -73,3 +73,15 @@ virsh net-autostart br1-net
 sysctl -w net.ipv4.ip_forward=1
 sh -c 'echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf'
 
+exit 1
+
+# -----------------------------
+# USAGE NOTES
+# -----------------------------
+
+VM_NAME=DebianDC1
+DISK_NAME=DebianDC1
+DISK_SIZE=25
+ISO_PATH=/home/erkan/Downloads/ISO
+
+
