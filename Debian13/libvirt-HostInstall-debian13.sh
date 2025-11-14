@@ -100,10 +100,8 @@ virt-install \
 virsh vncdisplay $VM_NAME
 
 # CREATE VM
-# Windows VM - (with --cdrom parameter)
-#              (with --disk parameter virtio-win.iso)
-# For virtio: LoadDriver->SelectTo->
-# When the appropriate virtual drive for the installation is selected from the LoadDriver button on the disk list screen, the target disk, C Drive, will appear.
+# Windows VM - (with --cdrom parameter), (with --disk parameter virtio-win.iso)
+# For virtio: LoadDriver->SelectTo-> When the appropriate virtual drive for the installation is selected from the LoadDriver button on the disk list screen, the target disk, C Drive, will appear.
 # -----------------------------
 VM_NAME=WindowsAD1
 DISK_NAME=Windows20221
