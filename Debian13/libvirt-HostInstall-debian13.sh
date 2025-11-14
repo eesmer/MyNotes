@@ -95,3 +95,6 @@ virt-install \
     --console pty,target_type=serial \
     --noautoconsole
 
+# Open VNC port on the created VM (:0=5900 - :1=5901)
+virsh vncdisplay $VM_NAME
+
