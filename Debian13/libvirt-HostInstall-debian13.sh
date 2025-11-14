@@ -106,6 +106,7 @@ VM_NAME=WindowsAD1
 DISK_NAME=Windows20221
 DISK_SIZE=50
 ISO_PATH=/home/erkan/Downloads/ISO
+VIRTIO_ISO_PATH=/home/erkan/Downloads/ISO/virtio-win.iso
 
 virt-install \
     --name $VM_NAME --vcpus 2 --memory 2048 --os-variant win2k19 \
