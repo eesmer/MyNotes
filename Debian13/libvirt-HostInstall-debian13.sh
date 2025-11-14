@@ -102,6 +102,11 @@ virsh vncdisplay $VM_NAME
 # CREATE VM
 # Windows VM - (with --cdrom parameter)
 # -----------------------------
+VM_NAME=WindowsAD1
+DISK_NAME=Windows20221
+DISK_SIZE=50
+ISO_PATH=/home/erkan/Downloads/ISO
+
 virt-install \
     --name $VM_NAME --vcpus 2 --memory 2048 --os-variant win2k19 \
     --disk path=/var/lib/libvirt/images/$DISK_NAME.qcow2,size=$DISK_SIZE,bus=virtio,format=qcow2 \
