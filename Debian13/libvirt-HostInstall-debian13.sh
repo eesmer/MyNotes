@@ -84,4 +84,11 @@ DISK_NAME=DebianDC1
 DISK_SIZE=25
 ISO_PATH=/home/erkan/Downloads/ISO
 
+virt-install \
+    --name $VM_NAME --vcpus 2 --memory 1280 --os-variant debian11 \
+    --disk path=/var/lib/libvirt/images/$DISK_NAME.qcow2,size=$DISK_SIZE,bus=virtio,format=qcow2 \
+    --network bridge=br1,model=virtio \
+    --location $ISO_PATH/debian-13.0.0-amd64-netinst.iso \
+    --graphics vnc,listen=0.0.0.0 \
+    --console pty,target_type=serial \
 
