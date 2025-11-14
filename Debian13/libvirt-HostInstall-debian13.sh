@@ -76,9 +76,11 @@ sh -c 'echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf'
 exit 1
 
 # -----------------------------
-# USAGE NOTES
+# === USAGE NOTES ===
 # -----------------------------
 
+# CREATE VM
+# -----------------------------
 VM_NAME=DebianDC1
 DISK_NAME=DebianDC1
 DISK_SIZE=25
