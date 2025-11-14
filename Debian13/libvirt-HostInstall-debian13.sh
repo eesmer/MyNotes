@@ -80,6 +80,7 @@ exit 1
 # -----------------------------
 
 # CREATE VM
+# Linux VM - (with --location parameter)
 # -----------------------------
 VM_NAME=DebianDC1
 DISK_NAME=DebianDC1
@@ -97,4 +98,17 @@ virt-install \
 
 # Open VNC port on the created VM (:0=5900 - :1=5901)
 virsh vncdisplay $VM_NAME
+
+# CREATE VM
+# Windows VM - (with --cdrom parameter)
+# -----------------------------
+virt-install \
+    --name $VM_NAME --vcpus 2 --memory 2048 --os-variant win2k19 \
+    --disk path=/var/lib/libvirt/images/$DISK_NAME.qcow2,size=$DISK_SIZE,bus=virtio,format=qcow2 \
+    --network bridge=br1,model=virtio \
+    --cdrom $ISO_PATH/win2019.iso \
+    --disk device=cdrom,path="$VIRTIO_ISO_PATH" \
+    --graphics vnc,listen=0.0.0.0 \
+    --console pty,target_type=serial \
+    --noautoconsole
 
