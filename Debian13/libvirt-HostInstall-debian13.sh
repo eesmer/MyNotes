@@ -101,6 +101,7 @@ virsh vncdisplay $VM_NAME
 
 # CREATE VM
 # Windows VM - (with --cdrom parameter)
+#              (with --disk parameter virtio-win.iso)
 # -----------------------------
 VM_NAME=WindowsAD1
 DISK_NAME=Windows20221
