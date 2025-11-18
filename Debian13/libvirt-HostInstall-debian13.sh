@@ -35,6 +35,16 @@ function handle_error {
 
 trap 'handle_error $LINENO' ERR
 
+# Host Network Settings - set static IP
+echo -e ""
+INTERFACE=$(ip route show default | awk '/default/ {print $5}' | head -n 1)
+
+if [ -z "${INTERFACE}" ]; then
+    echo -e "ERROR: No active network adapter found"
+    echo "Please check network settings/status"
+    exit 1
+fi
+
 # KVM-OK Test
 echo "Host Virtualization Control:"
 if kvm-ok; then
