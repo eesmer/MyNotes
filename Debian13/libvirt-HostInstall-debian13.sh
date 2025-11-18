@@ -72,6 +72,9 @@ gateway $GATEWAY
 dns-nameservers $DNS_SERVER
 EOF
 
+echo -e "Network restarting.. - The SSH connection is disconnected. SSH again from your own terminal."
+systemctl restart networking
+
 # KVM-OK Test
 echo "Host Virtualization Control:"
 if kvm-ok; then
