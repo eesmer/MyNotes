@@ -52,6 +52,12 @@ whiptail --msgbox \
 #--------------------
 # Controls
 #--------------------
+CHECK_PACKAGES() {
+if ! [ -x "$(command -v whiptail)" ]; then
+	apt-get -y install whiptail
+fi
+}
+
 CHECKRUN_ROOT() {
 if ! [[ $EUID -eq 0 ]]; then
         echo -e "${RED}${BOLD}This script should only be run as root user.${NOCOL}" | tee -a $LOGFILE
@@ -237,6 +243,7 @@ chmod 644 /etc/default/named
     fi
 }
 
+CHECK_PACKAGES
 CHECKRUN_ROOT
 CHECK_DISTRO
 UPDATE_CONTROL
