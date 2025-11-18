@@ -75,6 +75,12 @@ EOF
 echo -e "Network restarting.. - The SSH connection is disconnected. SSH again from your own terminal."
 systemctl restart networking
 
+if [ $? -eq 0 ]; then
+        echo -e "Network restarted successfully - New IP Address: ${STATIC_IP}"
+else
+        echo -e "ERROR: Failed to restart network"
+fi
+
 # KVM-OK Test
 echo "Host Virtualization Control:"
 if kvm-ok; then
