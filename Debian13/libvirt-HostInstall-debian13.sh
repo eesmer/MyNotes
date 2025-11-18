@@ -36,7 +36,7 @@ function handle_error {
 trap 'handle_error $LINENO' ERR
 
 # Host Network Settings - set static IP
-echo -e ""
+echo -e "It is recommended that the host machine be configured to use a static IP address. Static IP configuration is in progress.."
 INTERFACE=$(ip route show default | awk '/default/ {print $5}' | head -n 1)
 
 if [ -z "${INTERFACE}" ]; then
