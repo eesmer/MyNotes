@@ -237,9 +237,9 @@ chmod 644 /etc/default/named
 
     systemctl is-active samba-ad-dc > /dev/null 2>&1
     if [ $? -eq 0 ]; then
-        whiptail --msgbox "\n${GREEN}${BOLD}!!! INSTALLATION SUCCESSFULLY !!!${NOCOL}\n\nDomain Name: $REALM\nDC Hostname: $HNAME.$REALM\n\n- resolv.conf updated (127.0.0.1).\n- You can test Kerberos and DNS queries from the DC itself.\n\nTest Command:\nhost -t SRV _ldap._tcp.$DOMAIN.$REALM 127.0.0.1" 20 80 45
+        whiptail --msgbox "\n!!! INSTALLATION SUCCESSFULLY !!!\n\nDomain Name: $REALM\nDC Hostname: $HNAME.$REALM\n\n- resolv.conf updated (127.0.0.1).\n- You can test Kerberos and DNS queries from the DC itself.\n\nTest Command:\nhost -t SRV _ldap._tcp.$DOMAIN.$REALM 127.0.0.1" 20 80 45
     else
-        whiptail --msgbox "\n${RED}${BOLD}!!! ERROR: INSTALLATION COULD NOT BE COMPLETED !!!${NOCOL}\n\nSamba-AD-DC service not started.\nCheck the log file: $LOGFILE" 20 80 45
+        whiptail --msgbox "\n!!! ERROR: INSTALLATION COULD NOT BE COMPLETED !!!\n\nSamba-AD-DC service not started.\nCheck the log file: $LOGFILE" 20 80 45
     fi
 }
 
