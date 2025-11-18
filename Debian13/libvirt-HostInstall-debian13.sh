@@ -56,6 +56,22 @@ else
         echo -e "No additional settings were made in the ${INTERFACES_FILE} file for ${INTERFACE}. (Not required)"
 fi
 
+CURRENT_IP=$(ip addr show dev "${INTERFACE}" | awk '/inet / {print $2}' | cut -d/ -f1 | head -n 1)
+read -p "IP Address:(Current IP:${CURRENT_IP}) " STATIC_IP
+read -p "Netmask: " NETMASK
+read -p "Gateway: " GATEWAY
+read -p "DNS Server: " DNS_SERVER
+
+cat > /etc/network/interfaces.d/debianhostnw <<EOF
+# debianhostnw - Static IP Settings
+auto $INTERFACE
+iface $INTERFACE inet static
+address $STATIC_IP
+netmask $NETMASK
+gateway $GATEWAY
+dns-nameservers $DNS_SERVER
+EOF
+
 # KVM-OK Test
 echo "Host Virtualization Control:"
 if kvm-ok; then
