@@ -45,6 +45,17 @@ if [ -z "${INTERFACE}" ]; then
     exit 1
 fi
 
+INTERFACES_FILE="/etc/network/interfaces"
+if grep -q "iface ${INTERFACE} inet dhcp" "${INTERFACES_FILE}"; then
+        echo -e "WARNING: ${INTERFACE} is set to DHCP in ${INTERFACES_FILE}!"
+        echo -e "Disabling ${INTERFACE} line in ${INTERFACES_FILE}"
+        sed -i "/^auto ${INTERFACE}/ s/^/#&/" "${INTERFACES_FILE}"
+        sed -i "/iface ${INTERFACE} inet dhcp/ s/^/#&/" "${INTERFACES_FILE}"
+        echo -e "${INTERFACE} adapter settings in ${INTERFACES_FILE} file are disabled"
+else
+        echo -e "No additional settings were made in the ${INTERFACES_FILE} file for ${INTERFACE}. (Not required)"
+fi
+
 # KVM-OK Test
 echo "Host Virtualization Control:"
 if kvm-ok; then
